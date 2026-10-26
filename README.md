@@ -14,8 +14,8 @@ A scout walks an island map through the skill stations. Every station has the sa
 | Part | What the scout does |
 |---|---|
 | **Name It** | Flashcards with a drawing of each tool or item. Say the name out loud, then tap to check. A link opens real photos in a new tab. |
-| **Build It** | Animated, step-by-step scenes for the task, a "what the judge checks" list, and a practice clock set to the station's time limit. |
-| **Test Yourself** | A 17-question quiz built only from the station's scoring rubric. Instant feedback with a short explanation, a score by rubric line, a review list of misses, and a reshuffled retake. |
+| **Build It** | Animated, step-by-step scenes for the task, a "what the judge checks" list, skill tips from the Troop Leader Resources, and a practice clock set to the station's time limit. |
+| **Test Yourself** | A 17-question knowledge quiz on the station's skills, grouped by the station's rubric lines and drawing on the Troop Leader Resources pages. Instant feedback with a short explanation, a score by rubric line, a review list of misses, and a reshuffled retake. |
 
 Requirements and scoring differ by level, so the steps, judge checklist, time limit and quiz all change with the level the scout picks.
 
