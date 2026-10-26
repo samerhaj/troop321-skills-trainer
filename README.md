@@ -47,7 +47,7 @@ Skill references linked from the stations ([Troop Leader Resources](https://troo
 
 - Fire building: [Fire Building](https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/), [NPR: Summer Science, How To Build A Campfire](https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire)
 - Orienteering: [Orienteering program feature](https://troopleader.scouting.org/program-features/orienteering/), [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/)
-- Lashing and pioneering: [Lashings](https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/), [Pioneering program feature](https://troopleader.scouting.org/program-features/pioneering/information/)
+- Lashing and pioneering: [Lashings](https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/), [Pioneering program feature](https://troopleader.scouting.org/program-features/pioneering/information/), and step-by-step lashing and hitch animations from [Animated Knots](https://www.animatedknots.com/scouting-knots)
 - First aid: [First Aid program feature](https://troopleader.scouting.org/program-features/first-aid/information/)
 - Measuring heights: [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/) (measuring heights and widths)
 
