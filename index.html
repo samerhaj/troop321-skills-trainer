@@ -25,17 +25,13 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .lvlab{font:600 12px var(--mono);color:var(--mute);margin-top:14px;text-transform:uppercase;letter-spacing:.08em}
 /* map */
 #map{margin-top:6px}
-.world{border-radius:14px;overflow:hidden;border:2px solid var(--line);background:#6ec6ff}
+.world{border-radius:14px;overflow:hidden;border:2px solid var(--line);background:#1f74b5}
 .world{overflow-x:auto}.world svg{display:block;width:100%;min-width:680px;height:auto}
 .node{cursor:pointer}
 .node:focus-visible{outline:none}.node:focus-visible .ring{stroke:#ffd23f;stroke-width:6}
 .node .disc{transition:transform .2s;transform-box:fill-box;transform-origin:center}
 .node:hover .disc,.node:focus-visible .disc{transform:scale(1.1)}
 .locked{opacity:.8}
-.cloud{animation:drift 60s linear infinite}
-@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(1100px)}}
-.bobq{animation:bobq 2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
-@keyframes bobq{50%{transform:translateY(-5px)}}
 #scout .lg1{animation:leg .35s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top center;animation-play-state:paused}
 #scout .lg2{animation:leg .35s ease-in-out infinite alternate-reverse;transform-box:fill-box;transform-origin:top center;animation-play-state:paused}
 #scout.walking .lg1,#scout.walking .lg2{animation-play-state:running}
@@ -170,7 +166,7 @@ function drawGlv(){
    Map positions are spread automatically; ids listed here but not in LIVE show as locked "coming soon". */
 const ORDER=['s1','s2','s3','s4','s6'];
 const LIVE=['s1','s2','s3','s4','s6'];
-const NODES=ORDER.map((id,i)=>({id,x:ORDER.length<2?480:Math.round(110+i*740/(ORDER.length-1)),y:i%2?195:325}));
+const NODES=ORDER.map((id,i)=>({id,x:ORDER.length<2?480:Math.round(110+i*740/(ORDER.length-1)),y:i%2?175:300}));
 const NINFO={
  s1:{name:'Hot Cocoa Reward Challenge',skill:'Fire Building',res:[{t:'Fire Building (Troop Leader Resources)',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/'},{t:'NPR: How to build a campfire',u:'https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire'}],ic:`<path d="M0-20C10-8 14-2 10 8 7 15-7 15-10 8-13 1-6-4 0-20Z" fill="#ff7a1a"/><path d="M0-6C5 0 6 4 3 9-2 11-6 8-4 3Z" fill="#ffd23f"/>`},
  s2:{name:'Hidden Treasure Hunt',skill:'Orienteering',res:[{t:'Orienteering program feature (Troop Leader Resources)',u:'https://troopleader.scouting.org/program-features/orienteering/'},{t:'Navigation and Measurements: compass and map skills',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/'}],ic:`<circle r="16" fill="#fff" stroke="#14202e" stroke-width="3"/><path d="M0-12 5 0 0 12-5 0Z" fill="#d33"/><path d="M0 12 5 0 0 0Z" fill="#14202e"/>`},
@@ -183,7 +179,7 @@ let pathLens=[],mapBuilt=false,scoutAt=0;
 function catmull(pts){let d=`M${pts[0][0]},${pts[0][1]}`;for(let i=0;i<pts.length-1;i++){const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;d+=` C${p1[0]+(p2[0]-p0[0])/6},${p1[1]+(p2[1]-p0[1])/6} ${p2[0]-(p3[0]-p1[0])/6},${p2[1]-(p3[1]-p1[1])/6} ${p2[0]},${p2[1]}`}return d}
 function drawMap(){
   $('#st').hidden=true;$('#map').hidden=false;$('#lvbox').hidden=true;
-  const pts=[[20,372],...NODES.map(n=>[n.x,n.y]),[940,150]];
+  const pts=[[48,388],...NODES.map(n=>[n.x,n.y]),[884,120]];
   const pd=catmull(pts);
   const sc=`<g id="scout" transform="translate(${NODES[scoutAt].x},${NODES[scoutAt].y-4})"><g id="scoutin"><ellipse cx="0" cy="2" rx="14" ry="4" fill="#0003"/>
    <g class="lg1"><rect x="-7" y="-14" width="6" height="14" rx="3" fill="#5b6b3a"/></g><g class="lg2"><rect x="1" y="-14" width="6" height="14" rx="3" fill="#6f7f48"/></g>
@@ -197,18 +193,25 @@ function drawMap(){
      ${live?'':`<g transform="translate(24,-26)"><rect x="-10" y="-8" width="20" height="16" rx="3" fill="#6b7c8f"/><path d="M-5-8v-4a5 5 0 0 1 10 0v4" stroke="#6b7c8f" stroke-width="3" fill="none"/></g>`}
      <g class="skl"><rect x="${-I.skill.length*4.1-10}" y="42" width="${I.skill.length*8.2+20}" height="22" rx="11" fill="#14202e" opacity=".85"/>${tx(0,58,I.skill,{s:13,f:'#fff'})}</g>${stz?tx(0,84,stz,{s:16,f:'#ffd23f'}):''}</g>`}).join('');
   $('#map').innerHTML=`<div class="world">${sv(`
-   <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa8ff"/><stop offset="1" stop-color="#bfe6ff"/></linearGradient></defs>
-   <rect width="960" height="440" fill="url(#sky)"/>
-   <circle cx="840" cy="70" r="34" fill="#ffe27a"/>
-   <g class="cloud" style="animation-duration:70s"><ellipse cx="80" cy="70" rx="46" ry="16" fill="#fff"/><ellipse cx="110" cy="58" rx="30" ry="16" fill="#fff"/></g>
-   <g class="cloud" style="animation-duration:95s;animation-delay:-40s"><ellipse cx="80" cy="130" rx="40" ry="13" fill="#fff"/><ellipse cx="104" cy="120" rx="26" ry="13" fill="#fff"/></g>
-   <rect y="318" width="960" height="122" fill="#2f9fd8"/><path d="M0 318H960" stroke="#bfe6ff" stroke-width="3" opacity=".7"/>
-   <path d="M0 400 Q120 300 260 380 T520 370 T780 360 T960 380V440H0Z" fill="#e3c98d"/><path d="M0 420 Q200 360 400 410 T800 400 T960 410V440H0Z" fill="#58b85a"/><g transform="translate(205,404) scale(1.0)"><path d="M0 0C2-20 6-40 14-62" stroke="#8a5a2b" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#2f8f3a"><path d="M14-62C2-74-14-72-26-60-12-66 0-64 14-62Z"/><path d="M14-62C26-76 42-74 52-60 38-66 26-66 14-62Z"/><path d="M14-62C4-60-6-50-10-36-2-48 6-56 14-62Z"/><path d="M14-62C26-58 34-48 36-34 30-46 22-56 14-62Z"/></g><circle cx="11" cy="-58" r="4" fill="#6e4524"/><circle cx="17" cy="-57" r="4" fill="#6e4524"/></g><g transform="translate(575,404) scale(0.9)"><path d="M0 0C2-20 6-40 14-62" stroke="#8a5a2b" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#2f8f3a"><path d="M14-62C2-74-14-72-26-60-12-66 0-64 14-62Z"/><path d="M14-62C26-76 42-74 52-60 38-66 26-66 14-62Z"/><path d="M14-62C4-60-6-50-10-36-2-48 6-56 14-62Z"/><path d="M14-62C26-58 34-48 36-34 30-46 22-56 14-62Z"/></g><circle cx="11" cy="-58" r="4" fill="#6e4524"/><circle cx="17" cy="-57" r="4" fill="#6e4524"/></g><g transform="translate(760,402) scale(1.05)"><path d="M0 0C2-20 6-40 14-62" stroke="#8a5a2b" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#2f8f3a"><path d="M14-62C2-74-14-72-26-60-12-66 0-64 14-62Z"/><path d="M14-62C26-76 42-74 52-60 38-66 26-66 14-62Z"/><path d="M14-62C4-60-6-50-10-36-2-48 6-56 14-62Z"/><path d="M14-62C26-58 34-48 36-34 30-46 22-56 14-62Z"/></g><circle cx="11" cy="-58" r="4" fill="#6e4524"/><circle cx="17" cy="-57" r="4" fill="#6e4524"/></g><g transform="translate(30,412) scale(0.85)"><path d="M0 0C2-20 6-40 14-62" stroke="#8a5a2b" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#2f8f3a"><path d="M14-62C2-74-14-72-26-60-12-66 0-64 14-62Z"/><path d="M14-62C26-76 42-74 52-60 38-66 26-66 14-62Z"/><path d="M14-62C4-60-6-50-10-36-2-48 6-56 14-62Z"/><path d="M14-62C26-58 34-48 36-34 30-46 22-56 14-62Z"/></g><circle cx="11" cy="-58" r="4" fill="#6e4524"/><circle cx="17" cy="-57" r="4" fill="#6e4524"/></g>
-   <g class="bobq"><rect x="150" y="100" width="34" height="34" rx="4" fill="#e9a23b" stroke="#8a5a2b" stroke-width="3"/>${tx(167,125,'?',{s:22,f:'#fff',w:800})}</g>
-   <g class="bobq" style="animation-delay:-.7s"><rect x="470" y="70" width="34" height="34" rx="4" fill="#e9a23b" stroke="#8a5a2b" stroke-width="3"/>${tx(487,95,'?',{s:22,f:'#fff',w:800})}</g>
-   <g class="bobq" style="animation-delay:-1.2s"><rect x="700" y="105" width="34" height="34" rx="4" fill="#e9a23b" stroke="#8a5a2b" stroke-width="3"/>${tx(717,130,'?',{s:22,f:'#fff',w:800})}</g>
-   <path id="road" d="${pd}" fill="none" stroke="#7a5230" stroke-width="22" stroke-linecap="round"/><path d="${pd}" fill="none" stroke="#e6c48a" stroke-width="16" stroke-linecap="round"/><path d="${pd}" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>
-   <g transform="translate(0,118)"><g transform="translate(888,0)"><rect x="-3" y="-30" width="6" height="70" fill="#6e4524"/><path d="M-9-34h18l-4 8h-10Z" fill="#c9a24a" stroke="#7a5a12" stroke-width="1.5"/><g class="fl"><path d="M0-62C9-50 12-44 8-38 4-33-4-33-8-38-11-44-6-50 0-62Z" fill="#ff7a1a"/><path d="M0-48C4-44 5-40 2-37-2-36-4-39-2-43Z" fill="#ffd23f"/></g></g><g transform="translate(922,0)"><rect x="-3" y="-30" width="6" height="70" fill="#6e4524"/><path d="M-9-34h18l-4 8h-10Z" fill="#c9a24a" stroke="#7a5a12" stroke-width="1.5"/><g class="fl"><path d="M0-62C9-50 12-44 8-38 4-33-4-33-8-38-11-44-6-50 0-62Z" fill="#ff7a1a"/><path d="M0-48C4-44 5-40 2-37-2-36-4-39-2-43Z" fill="#ffd23f"/></g></g></g>
+   <defs><radialGradient id="sea" cx="50%" cy="50%" r="75%"><stop offset="0" stop-color="#4fb4e6"/><stop offset="1" stop-color="#1f74b5"/></radialGradient></defs>
+   <rect width="960" height="440" fill="url(#sea)"/>
+   ${[[90,30],[250,20],[520,16],[760,22],[930,300],[640,430],[300,432],[20,250],[940,40]].map(([x,y])=>`<path d="M${x-14} ${y}q7-6 14 0t14 0" fill="none" stroke="#bfe6ff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>`).join('')}
+   <path d="M60 120C90 50 260 40 360 62C460 30 600 44 700 40C820 34 930 70 938 150C948 230 920 300 900 350C870 410 740 424 600 410C480 432 340 420 220 414C110 420 26 392 22 330C18 260 36 170 60 120Z" fill="#9fd3ee" opacity=".55" transform="translate(-6,4) scale(1.012)"/>
+   <path d="M60 120C90 50 260 40 360 62C460 30 600 44 700 40C820 34 930 70 938 150C948 230 920 300 900 350C870 410 740 424 600 410C480 432 340 420 220 414C110 420 26 392 22 330C18 260 36 170 60 120Z" fill="#ecd59f"/>
+   <path d="M88 136C114 78 262 70 360 90C462 60 600 72 700 68C810 62 900 94 908 160C916 232 892 292 874 334C848 384 736 394 600 382C482 402 342 392 226 386C126 390 66 366 62 312C58 248 68 182 88 136Z" fill="#78b85a"/>
+   <path d="M160 170C190 120 300 110 380 124C470 100 610 110 690 106C780 102 840 130 846 176C852 230 830 270 800 296C760 330 640 336 560 326C460 342 330 334 250 330C190 330 150 306 146 260C142 222 146 196 160 170Z" fill="#8cc66a" opacity=".55"/>
+   <g transform="translate(480,96)"><path d="M-70 40-18-34H18L70 40Z" fill="#9b7b55" stroke="#6e5434" stroke-width="3" stroke-linejoin="round"/><path d="M-18-34 0-22 18-34" fill="#5c4630"/><path d="M-30 4-12-12M10-14 30 6M-4 0v24" stroke="#6e5434" stroke-width="2" fill="none"/><ellipse cx="0" cy="-36" rx="18" ry="5" fill="#6e5434"/><g opacity=".65"><circle cx="6" cy="-50" r="7" fill="#e9eef4"/><circle cx="16" cy="-62" r="9" fill="#e9eef4"/></g></g>
+   ${[[190,108,1],[230,96,.8],[700,96,1],[742,110,.85],[390,384,.9],[610,372,.9],[760,356,1],[120,240,.9]].map(([x,y,k])=>`<g transform="translate(${x},${y}) scale(${k})">${[[-14,4,13],[0,-6,15],[14,4,12],[0,8,11]].map(([dx,dy,rr])=>`<circle cx="${dx}" cy="${dy}" r="${rr}" fill="#3f8a3a" stroke="#2c6a2a" stroke-width="2"/>`).join('')}</g>`).join('')}
+   ${[[560,232,9,6],[574,240,6,4],[402,248,7,5],[720,250,8,5],[210,352,7,4]].map(([x,y,rx,ry])=>`<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}" fill="#9aa5b1" stroke="#6b7785" stroke-width="2"/>`).join('')}
+   <path d="M330 250c18-10 40-8 50 4s-6 26-28 26-34-14-22-30Z" fill="#5fb6e4" stroke="#3f86c9" stroke-width="2.5"/>
+   ${[[268,412,.8,-4],[912,250,.9,8],[600,404,.75,6],[930,190,.75,10],[262,72,.7,-6],[70,170,.75,-8]].map(([x,y,k,rot])=>`<g transform="translate(${x},${y}) scale(${k}) rotate(${rot})"><path d="M0 0C2-20 6-40 14-62" stroke="#8a5a2b" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#2f8f3a"><path d="M14-62C2-74-14-72-26-60-12-66 0-64 14-62Z"/><path d="M14-62C26-76 42-74 52-60 38-66 26-66 14-62Z"/><path d="M14-62C4-60-6-50-10-36-2-48 6-56 14-62Z"/><path d="M14-62C26-58 34-48 36-34 30-46 22-56 14-62Z"/></g><circle cx="11" cy="-58" r="4" fill="#6e4524"/><circle cx="17" cy="-57" r="4" fill="#6e4524"/></g>`).join('')}
+   <g transform="translate(36,418) rotate(-12)"><rect x="-26" y="-8" width="52" height="16" rx="3" fill="#a8672f" stroke="#6e4524" stroke-width="2"/><path d="M-14-8v16M0-8v16M14-8v16" stroke="#6e4524" stroke-width="2"/></g>
+   <g transform="translate(50,46)" opacity=".9"><circle r="22" fill="#fff" fill-opacity=".85" stroke="#14202e" stroke-width="2"/><path d="M0-18 5 0 0 18-5 0Z" fill="#14202e"/><path d="M0-18 5 0H-5Z" fill="#c0304a"/><path d="M-18 0 0-4 18 0 0 4Z" fill="#14202e" opacity=".55"/><text y="-25" font-size="11" font-weight="800" text-anchor="middle" fill="#fff" font-family="Archivo,Arial">N</text></g>
+   <path d="${pd}" fill="none" stroke="#5b8a3e" stroke-width="22" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/>
+   <path id="road" d="${pd}" fill="none" stroke="#a07a4a" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="${pd}" fill="none" stroke="#c19a63" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="${pd}" fill="none" stroke="#6e4f2c" stroke-width="3" stroke-dasharray="2 11" stroke-linecap="round"/>
+   <g transform="translate(884,120)"><ellipse cx="0" cy="10" rx="34" ry="12" fill="#c9a66b" stroke="#8a6a43" stroke-width="2"/>${[[-26,0],[26,0]].map(([dx])=>`<g transform="translate(${dx},0)"><rect x="-3" y="-34" width="6" height="44" fill="#6e4524"/><path d="M-9-38h18l-4 8h-10Z" fill="#c9a24a" stroke="#7a5a12" stroke-width="1.5"/><g class="fl"><path d="M0-66C9-54 12-48 8-42 4-37-4-37-8-42-11-48-6-54 0-66Z" fill="#ff7a1a"/><path d="M0-52C4-48 5-44 2-41-2-40-4-43-2-47Z" fill="#ffd23f"/></g></g>`).join('')}<g transform="translate(0,6)"><path d="M-8 6 8-2M-8-2 8 6" stroke="#6e4524" stroke-width="4" stroke-linecap="round"/><g transform="translate(0,-2) scale(.45)"><g class="fl"><path d="M0-30C16-10 22 0 16 14 10 26-10 26-16 14-22 0-10-8 0-30Z" fill="#ff7a1a"/><path d="M0-8C9 2 10 10 5 17-4 19-10 14-6 5Z" fill="#ffd23f"/></g></g></g></g>
    ${nodes}${sc}`,'0 0 960 440')}</div>
    <div class="slist">${NODES.map((n,i)=>{const live=LIVE.includes(n.id);return `<button class="sbtn" data-i="${i}"${live?'':' disabled'}><span class="n">${i+1}</span><span>${NINFO[n.id].name} (${NINFO[n.id].skill})<small>${live?'':'Coming soon'} <span class="stars">${starsOf(n.id)}</span></small></span></button>`}).join('')}</div>`;
   const road=document.getElementById('road');const L=road.getTotalLength();
