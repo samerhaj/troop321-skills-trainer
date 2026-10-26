@@ -32,10 +32,11 @@ Requirements and scoring differ by level, so the steps, judge checklist, time li
 | # | Skill | Station |
 |---|---|---|
 | 1 | Fire building | Hot Cocoa Reward Challenge |
-| 2 | Orienteering (map and compass) | Hidden Treasure Hunt |
+| 2 | Knots (Scout, Tenderfoot, Second Class and First Class rank knots) | Shipwreck Rope Challenge |
 | 3 | Lashing and pioneering | Signal Mast Challenge |
 | 4 | First aid | Medevac First Aid Challenge |
-| 5 | Orienteering (estimating height) | Lookout Tower Height Challenge |
+| 5 | Orienteering (map and compass) | Hidden Treasure Hunt |
+| 6 | Orienteering (estimating height) | Lookout Tower Height Challenge |
 
 More stations will be added over time.
 
@@ -51,6 +52,7 @@ Skill references linked from the stations ([Troop Leader Resources](https://troo
 
 - Fire building: [Fire Building](https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/), [NPR: Summer Science, How To Build A Campfire](https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire)
 - Orienteering: [Orienteering program feature](https://troopleader.scouting.org/program-features/orienteering/), [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/)
+- Knots: [Scouts BSA rank requirements (2025)](https://www.scouting.org/wp-content/uploads/2026/02/3321625-Scouts-BSA-Requirements.pdf) and [Animated Knots: Scouting knots](https://www.animatedknots.com/scouting-knots)
 - Lashing and pioneering: [Lashings](https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/), [Pioneering program feature](https://troopleader.scouting.org/program-features/pioneering/information/), and step-by-step lashing and hitch animations from [Animated Knots](https://www.animatedknots.com/scouting-knots)
 - First aid: [First Aid program feature](https://troopleader.scouting.org/program-features/first-aid/information/)
 - Measuring heights: [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/) (measuring heights and widths)

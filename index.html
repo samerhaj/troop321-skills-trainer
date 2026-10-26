@@ -133,7 +133,7 @@ th{font:600 12px var(--mono);text-transform:uppercase;color:var(--mute)}.pts{fon
 </style></head><body><div class="wrap">
 <header><div class="kick">Scouts BSA Troop 321 · Survivor: T321 Edition</div>
 <h1>Troop 321 Skills Trainer</h1>
-<p class="sub">Welcome to the island, castaways. Your patrol is a tribe, and every station is a challenge: win it with Scout skills, teamwork and a cool head. Click a station on the map to learn it. Each station has three parts: <b>Learn It</b> (know your gear), <b>Build It</b> (watch the steps), <b>Test Yourself</b> (a quiz). You pick your patrol level once you are inside a station.</p>
+<p class="sub">Welcome to the island, castaways. Your patrol is a tribe, and every station is a challenge: win it with Scout skills, teamwork and a cool head. Click a station on the map to learn it. Each station has three parts: <b>Learn It</b> (know your skills), <b>Build It</b> (watch the steps), <b>Test Yourself</b> (a quiz). You pick your patrol level once you are inside a station.</p>
 <div id="lvbox" hidden><div class="lvlab">Your level</div><div class="lv" id="glv"></div></div></header>
 <main id="map"></main>
 <main id="st" hidden></main>
@@ -164,8 +164,8 @@ function drawGlv(){
 /* Station order on the map. To add a station: define ST.<id> and NINFO.<id> (name, skill, res = learn-more links, ic = map icon), then add the id here.
    Ids are stable keys (saved scores use them), so never reuse or renumber an old id.
    Map positions are spread automatically; ids listed here but not in LIVE show as locked "coming soon". */
-const ORDER=['s1','s2','s3','s4','s6'];
-const LIVE=['s1','s2','s3','s4','s6'];
+const ORDER=['s1','s7','s3','s4','s2','s6'];
+const LIVE=['s1','s7','s3','s4','s2','s6'];
 const NODES=ORDER.map((id,i)=>({id,x:ORDER.length<2?480:Math.round(110+i*740/(ORDER.length-1)),y:i%2?175:300}));
 const NINFO={
  s1:{name:'Hot Cocoa Reward Challenge',skill:'Fire Building',res:[{t:'Fire Building (Troop Leader Resources)',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/'},{t:'NPR: How to build a campfire',u:'https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire'}],ic:`<path d="M0-20C10-8 14-2 10 8 7 15-7 15-10 8-13 1-6-4 0-20Z" fill="#ff7a1a"/><path d="M0-6C5 0 6 4 3 9-2 11-6 8-4 3Z" fill="#ffd23f"/>`},
@@ -1347,6 +1347,115 @@ ST.s3.qb.push(
  }};
  for(const id in CARD_INFO)for(const it of ST[id].items){const c=CARD_INFO[id][it.n];if(!c)continue;
   if(c.x)it.u=it.u+' '+c.x;it.lk=[].concat(it.lk||[],c.l||[])}}
+/* ================= STATION: Knots (id s7) — the knots in the Scout, Tenderfoot, Second Class and First Class
+   requirements (Scouts BSA requirements, effective January 1, 2025). Beginner = Scout and Tenderfoot,
+   Intermediate adds Second Class, Advanced adds First Class. ================= */
+{const AK='https://www.animatedknots.com/', REQ='https://www.scouting.org/wp-content/uploads/2026/02/3321625-Scouts-BSA-Requirements.pdf',
+  PIO='https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Pamphlets/Pioneering.pdf';
+ const ak=(slug,t)=>({t:t||'Step-by-step animation (Animated Knots)',u:AK+slug}), req=r=>({t:`Scouts BSA requirements: ${r}`,u:REQ}),
+  pio=p=>({t:`Pioneering merit badge pamphlet, p. ${p}`,u:PIO});
+ const BL='#5b8fd6',BLD='#24508f';
+ const ROPE2=(d,w)=>`<path d="${d}" stroke="${BLD}" stroke-width="${(w||4)+2}" fill="none" stroke-linecap="round"/><path d="${d}" stroke="${BL}" stroke-width="${w||4}" fill="none" stroke-linecap="round"/>`;
+ const s3d=n=>(ST.s3.items.find(i=>i.n===n)||{}).d||'';
+ const D={
+  parts:`<rect width="200" height="140" fill="#fbfaf2"/>${ROPE('M14 104C60 104 70 40 110 40S150 80 150 104V120',5)}${tx(40,124,'standing part',{s:11})}${tx(110,28,'bight',{s:11})}${tx(166,128,'running end',{s:11})}`,
+  square:`<rect width="200" height="140" fill="#fbfaf2"/>${ROPE('M10 58H86C110 58 110 84 86 84H10',5)}${ROPE2('M190 58H114C90 58 90 84 114 84H190',5)}`,
+  whip:`<rect width="200" height="140" fill="#fbfaf2"/>${ROPE('M10 70H160',14)}${[0,1,2,3,4,5,6].map(i=>`<path d="M${128+i*4} 60V80" stroke="#3b4652" stroke-width="2.5"/>`).join('')}<path d="M126 62C118 50 110 46 100 44" stroke="#3b4652" stroke-width="2" fill="none"/>`,
+  fuse:`<rect width="200" height="140" fill="#fbfaf2"/>${ROPE2('M10 70H120',12)}<ellipse cx="124" cy="70" rx="9" ry="10" fill="${BLD}"/><g transform="translate(150,78) scale(.7)">${I1.flame()}</g>`,
+  sheet:`<rect width="200" height="140" fill="#fbfaf2"/>${ROPE('M10 52H104C130 52 130 88 104 88H10',8)}${ROPE2('M190 64H118C100 64 98 42 112 40S136 46 128 62L110 66C100 68 98 78 108 80',4)}`,
+  bowline:`<rect width="200" height="140" fill="#fbfaf2"/>${ROPE('M100 6V42',5)}<ellipse cx="100" cy="50" rx="11" ry="8" fill="none" stroke="${RPD}" stroke-width="7"/><ellipse cx="100" cy="50" rx="11" ry="8" fill="none" stroke="${RP}" stroke-width="5"/>${ROPE('M90 56C58 62 58 130 100 130C142 130 142 62 110 56',5)}${ROPE('M106 54V82',5)}`,
+  edge:`<rect width="200" height="140" fill="#fbfaf2"/>${['E','D','G','E'].map((t,i)=>`<g transform="translate(${43+i*38},70)"><rect x="-15" y="-15" width="30" height="30" rx="6" fill="#fff" stroke="#1a8f4c" stroke-width="3"/><text y="7" font-size="18" font-weight="800" text-anchor="middle" fill="#1a8f4c" font-family="Archivo,Arial">${t}</text></g>`).join('')}`,
+ };
+ const K=(c,n,u,d,lv,id,links,q)=>({c,n,u,d,lv,id,lk:links,q});
+ ST.s7={id:'s7',n:2,name:'Shipwreck Rope Challenge',
+  scenario:'The supply raft broke apart and ropes washed up all over the beach. Before your tribe can use them, every rope needs care and the right knot. Tie each knot, explain how it is used, and check your teammates\' work. 15 to 25 minutes, 50 points.',
+  time:{T:15,W:20,B:25},
+  clockNote:'The clock is set to your level\'s time.',
+  notes:'These are the knots in the Scout, Tenderfoot, Second Class and First Class rank requirements. Tie each one, say what it is for, and check that it is dressed neatly and set tight.',
+  idPlan:{T:[['k',4]],W:[['k',4]],B:[['k',4]]},idCat:'gear',
+  goal:{T:{t:'Scout and Tenderfoot knots',d:'Tie a square knot, two half hitches and a taut-line hitch, and explain how each is used. Whip a natural-fiber rope end and fuse a synthetic rope end. Teach a teammate the square knot using the EDGE method.'},
+   W:{t:'Add the Second Class knots',d:'Do everything Beginner patrols do. Also tie a sheet bend and a bowline, and describe a situation where you would use each.'},
+   B:{t:'Add the First Class knots and lashings',d:'Do everything Intermediate patrols do. Also tie a timber hitch and a clove hitch, and join poles with square, shear and diagonal lashings.'}},
+  judge:{T:['Tie it right (20): square knot, two half hitches and taut-line hitch, dressed neatly and set tight.','Explain the use (15): every scout says how one of the knots is used.','Rope care (10): one rope end whipped and one synthetic end fused.','Teamwork (5): every scout ties a knot and helps a teammate.'],
+   W:['Tie it right (20): the Beginner knots plus the sheet bend and bowline.','Explain the use (15): a real situation for each knot.','Rope care (10): one rope end whipped and one synthetic end fused.','Teamwork (5): every scout ties a knot and helps a teammate.'],
+   B:['Tie it right (20): all of the above plus the timber hitch, clove hitch, and square, shear and diagonal lashings.','Explain the use (15): a real situation for each knot and when lashings should and should not be used.','Rope care (10): one rope end whipped and one synthetic end fused.','Teamwork (5): every scout ties a knot and helps a teammate.']},
+  items:[
+   K('Basics','Parts of a rope','The running end is the end you tie with; the standing part is the rest of the rope. A bight is a U-shaped bend, and a loop is a bend that crosses over itself.',D.parts,'TWB','x',[pio(39)],'parts of a rope running end standing part bight'),
+   K('Scout and Tenderfoot','Square knot','Ties two ends of one rope around something: a bandage, a bundle of sticks or a sail cover. Right over left, then left over right; both ends come out side by side. Never use it to join two ropes that will carry a load: it can slip or capsize. Right over left twice makes a granny knot, which slips.',D.square,'TWB','k',[ak('square-knot'),req('Scout 4a, Tenderfoot 3a')],'square knot'),
+   K('Scout and Tenderfoot','Two half hitches','Ties a rope to a post, ring or tree, like a clothesline or a guy line. Pass the end around the post, then make two half hitches around the standing part, both turning the same way.',s3d('Two half hitches'),'TWB','k',[ak('two-half-hitches-knot'),req('Scout 4a, Tenderfoot 3b'),pio('20-21')],'two half hitches knot'),
+   K('Scout and Tenderfoot','Taut-line hitch','An adjustable loop for tent guy lines: slide it up to tighten or down to loosen, and it holds once loaded. Use it on tents, not on pioneering structures.',s3d('Taut-line hitch'),'TWB','k',[ak('midshipmans-hitch-knot','Step-by-step animation (Animated Knots, as Midshipman\'s Hitch)'),req('Scout 4a, Tenderfoot 3c'),{t:'Camping merit badge pamphlet, p. 33',u:'https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Pamphlets/Camping.pdf'}],'taut-line hitch tent'),
+   K('Rope care','Whipping','Wrap thin cord tightly around a rope end so it will not unravel. Make the whipping about as long as the rope is thick. A sailmaker\'s whipping holds best; a West Country whipping works on any rope.',D.whip,'TWB','k',[ak('common-whipping-knot','Common whipping (Animated Knots)'),ak('sailmakers-whipping-knot','Sailmaker\'s whipping (Animated Knots)'),req('Scout 4b'),pio('11-13')],'whipping rope end'),
+   K('Rope care','Fusing','Melt the end of a synthetic rope, like nylon or polypropylene, so its strands fuse together. Do it outdoors with an adult, and do not touch the melted end until it cools: it is very hot and sticky. Natural-fiber rope will not fuse; whip it instead.',D.fuse,'TWB','k',[req('Scout 4b'),pio(11),pio(41)],'fusing synthetic rope end'),
+   K('Scout and Tenderfoot','Teaching EDGE','Explain, Demonstrate, Guide, Enable: explain the knot, show how it is tied, guide your learner as they practice, then let them tie it on their own. Tenderfoot asks you to teach the square knot this way.',D.edge,'TWB','x',[req('Tenderfoot 8')],'scouting teaching EDGE method'),
+   K('Second Class','Sheet bend','Joins two ropes, even ropes of different thickness. Make a bight in the thicker rope, pass the thinner rope up through it, around behind, and tuck it under itself. Both tails should end on the same side. For ropes that are very different in size, go around twice (double sheet bend).',D.sheet,'WB','k',[ak('sheet-bend-knot'),req('Second Class 2f')],'sheet bend knot'),
+   K('Second Class','Bowline','Makes a fixed loop that will not slip or jam and is easy to untie, such as a rescue loop or a loop to drop over a post. Form a small loop; the end comes up through it, goes around the standing part, and back down. It can loosen when there is no load on it, so check it.',D.bowline,'WB','k',[ak('bowline-knot'),req('Second Class 2g')],'bowline knot'),
+   K('First Class','Timber hitch','Ties a rope around a log or pole: loop it around, then wrap the end around itself three or more times. It grips as you pull, falls loose when you stop, and starts the diagonal lashing.',s3d('Timber hitch'),'B','k',[ak('timber-hitch-knot'),req('First Class 3b')],'timber hitch'),
+   K('First Class','Clove hitch','Two half hitches snugged together around a pole. Quick to tie and adjust, and used to start and finish most lashings.',s3d('Clove hitch'),'B','k',[ak('clove-hitch-knot-rope-end'),req('First Class 3b'),pio('17-19')],'clove hitch'),
+   K('First Class','Square lashing','Joins two poles that cross at a right angle. Clove hitch, wrapping turns, frapping turns, and finish. See the Signal Mast station for the full steps.',s3d('Square lashing'),'B','k',[ak('square-lashing-knot'),req('First Class 3c')],'square lashing'),
+   K('First Class','Shear lashing','Lashes two poles side by side so they can be spread into an A-shape (shear legs).',s3d('Shear lashing'),'B','k',[ak('shear-lashing-knot'),req('First Class 3c')],'shear lashing'),
+   K('First Class','Diagonal lashing','Holds crossed braces together so a frame does not rack. It starts with a timber hitch around both poles.',s3d('Diagonal lashing'),'B','k',[ak('diagonal-lashing-knot'),req('First Class 3c')],'diagonal lashing')
+  ],
+  cats:[{k:'gear',n:'Rope basics (warm-up, not scored)',pts:{T:0,W:0,B:0}},{k:'tie',n:'Tie it right',pts:{T:20,W:20,B:20}},{k:'use',n:'Explain the use',pts:{T:15,W:15,B:15}},{k:'care',n:'Rope care',pts:{T:10,W:10,B:10}},{k:'team',n:'Teamwork',pts:{T:5,W:5,B:5}}],
+  qb:[
+   Q('gear','TWB','Which rank first asks you to tie the square knot, two half hitches and taut-line hitch?','Scout',['First Class','Eagle','Second Class'],'Scout rank 4a: tie them and explain how each is used.'),
+   Q('gear','TWB','What is the standing part of a rope?','The long part you are not tying with',['The end you tie with','A loop in the middle','The knot itself'],'The running end does the tying; the standing part is the rest (Pioneering merit badge pamphlet).'),
+   Q('gear','TWB','What is a bight?','A U-shaped bend in the rope',['A knot that slips','The end of the rope','A broken strand'],'A bight is a U-shaped doubling of the rope (Pioneering merit badge pamphlet).'),
+   Q('tie','TWB','How do you tie a square knot?','Right over left, then left over right',['Right over left, then right over left again','Wrap three times and tuck','Left over left'],'Crossing the same way twice makes a granny knot instead.'),
+   Q('tie','TWB','Your "square knot" slips and its ends stick out crosswise. What did you probably tie?','A granny knot',['A bowline','A sheet bend','A clove hitch'],'A granny knot comes from crossing the same way twice. A true square knot lies flat with the ends side by side.'),
+   Q('tie','TWB','In two half hitches, how should the two hitches turn?','Both the same way around the standing part',['In opposite directions','One around the post, one around nothing','It does not matter'],'Two matching half hitches around the standing part make the knot.'),
+   Q('tie','TWB','What makes the taut-line hitch adjustable?','Its loop slides along the standing part until it is loaded',['It has no loop','It is tied with two ropes','It uses a stick'],'Slide it to tighten or loosen a tent guy line.'),
+   Q('tie','WB','In a sheet bend, which rope forms the bight?','The thicker rope',['The thinner rope','Both ropes','Neither rope'],'Make the bight in the thicker rope, then weave the thinner one through (Animated Knots).'),
+   Q('tie','WB','In a correctly tied sheet bend, where do the two short tails end up?','On the same side of the knot',['On opposite sides','Wrapped around a pole','Inside the bight'],'Tails on opposite sides make a less reliable knot (Animated Knots).'),
+   Q('tie','WB','In the bowline "rabbit" story, what does the rabbit do?','Comes up out of the hole, goes around the tree, and back down the hole',['Runs around the hole three times','Jumps over the tree','Stays in the hole'],'The hole is the small loop, the tree is the standing part, and the rabbit is the running end.'),
+   Q('tie','B','Which hitch is tied by wrapping the end around itself three or more times?','Timber hitch',['Clove hitch','Bowline','Square knot'],'The wraps grip as you pull (First Class 3b).'),
+   Q('tie','B','Which three lashings does First Class 3c ask for?','Square, shear and diagonal',['Round, floor and tripod','Square, round and floor','Tripod, diagonal and floor'],'First Class 3c: join two or more poles with square, shear and diagonal lashings.'),
+   Q('use','TWB','Which knot ties a bandage or a bundle of sticks?','Square knot',['Taut-line hitch','Timber hitch','Sheet bend'],'The square knot binds two ends of the same rope around something.'),
+   Q('use','TWB','Which knot should never be used to join two ropes that will carry a heavy load?','Square knot',['Sheet bend','Bowline','Double sheet bend'],'It can slip or capsize under load (Animated Knots).'),
+   Q('use','TWB','Which hitch goes on tent guy lines so you can tighten them?','Taut-line hitch',['Square knot','Timber hitch','Granny knot'],'Its loop slides to adjust and holds when loaded (Camping merit badge pamphlet).'),
+   Q('use','TWB','Which knot ties a clothesline to a tree?','Two half hitches',['Square knot','Sheet bend','Granny knot'],'Two half hitches tie a rope to a post, ring or tree.'),
+   Q('use','WB','You need to join a thin rope to a thick rope. Which knot?','Sheet bend',['Square knot','Taut-line hitch','Timber hitch'],'Second Class 2f: the sheet bend joins ropes, even of different sizes.'),
+   Q('use','WB','You need a loop that will not slip, to lower a pack or as a rescue loop. Which knot?','Bowline',['Taut-line hitch','Granny knot','Two half hitches'],'Second Class 2g: the bowline makes a fixed loop that does not slip or jam.'),
+   Q('use','WB','When can a bowline come loose?','When there is no load on it',['Only in the rain','Never','Only on thick rope'],'Check it before you trust it (Animated Knots).'),
+   Q('use','B','Which hitch helps you drag a log?','Timber hitch',['Square knot','Sheet bend','Bowline'],'Loop it around the log; it tightens as you pull.'),
+   Q('use','B','Which hitch starts and finishes most lashings?','Clove hitch',['Bowline','Sheet bend','Granny knot'],'Two half hitches snugged together around a pole (Pioneering merit badge pamphlet).'),
+   Q('use','B','Which lashing starts with a timber hitch?','Diagonal lashing',['Square lashing','Shear lashing','Floor lashing'],'The timber hitch pulls the crossed poles together.'),
+   Q('care','TWB','Why do you whip or fuse a rope end?','So the rope does not unravel',['To make it heavier','To change its color','So it floats'],'Scout rank 4b: whip and fuse the ends of different kinds of rope.'),
+   Q('care','TWB','Which ropes can be fused with heat?','Synthetic ropes like nylon and polypropylene',['Cotton and manila','Every kind of rope','No rope can be fused'],'Synthetic fibers melt and stick together; natural fibers just burn.'),
+   Q('care','TWB','How should you finish the end of a manila or cotton rope?','Whip it',['Fuse it with a flame','Glue it to a stick','Leave it frayed'],'Natural-fiber rope will not fuse, so whip the end.'),
+   Q('care','TWB','How long should a whipping be?','About as long as the rope is thick',['As long as your arm','One single wrap','Half the rope'],'Make the whipping as long as the rope\'s diameter (Pioneering merit badge pamphlet).'),
+   Q('care','TWB','Why wait before touching a freshly fused rope end?','Melted plastic is very hot and sticky',['It might change color','It will unravel','It is not allowed'],'Fuse rope ends outdoors with an adult, and let them cool.'),
+   Q('care','TWB','Which whipping holds best because the cord is woven between the strands?','Sailmaker\'s whipping',['Granny whipping','A square knot','Fusing'],'The sailmaker\'s whipping is woven into the strands (Pioneering merit badge pamphlet).'),
+   Q('team','TWB','What does EDGE stand for?','Explain, Demonstrate, Guide, Enable',['Eat, Drink, Go, Enjoy','Explore, Dig, Gather, End','Easy, Done, Good, Excellent'],'Tenderfoot 8: teach the square knot using the Teaching EDGE method.'),
+   Q('team','TWB','Using EDGE, what do you do after you demonstrate the knot?','Guide the learner while they practice',['Tie it for them every time','Leave right away','Give a test first'],'Explain, Demonstrate, Guide, then Enable them to tie it on their own.'),
+   Q('team','TWB','A teammate tied the knot wrong. What is the best move?','Show them kindly and let them tie it again',['Laugh at them','Tie it yourself and move on','Tell the judge'],'Helping a teammate is part of the challenge.')
+  ],
+  tips:['Learn the parts of a rope first: running end, standing part, bight and loop.',
+   'Dress every knot (no twists or crossed strands), then set it tight. A neat knot is a strong knot.',
+   'Square knot: right over left, then left over right. If the ends stick out crosswise, it is a granny knot.',
+   'Never use the square knot to join ropes that carry a load; use a sheet bend.',
+   'Use the taut-line hitch on tent guy lines, not on pioneering structures.',
+   'Whip natural-fiber rope; fuse synthetic rope outdoors with an adult.',
+   'Teach with EDGE: Explain, Demonstrate, Guide, Enable.']
+ };
+ const scene=(it,step)=>L=>GROUND+`<g class="pop"><rect x="40" y="40" width="240" height="190" rx="12" fill="#fff" stroke="#14202e" stroke-width="3"/><svg x="50" y="60" width="220" height="154" viewBox="0 0 200 140">${it.d}</svg></g>`+tx(400,96,it.n,{s:20})+`<g class="fade" style="animation-delay:.8s">${tx(400,126,it.c,{s:14,f:'#5a6878'})}${(step||'').split('|').map((l,i)=>tx(400,160+i*22,l,{s:14})).join('')}</g>`;
+ const it=n=>ST.s7.items.find(i=>i.n===n);
+ const st=(n,cap,lines)=>({t:n,cap,sc:scene(it(n),lines),dur:6});
+ const T=[st('Parts of a rope','Know the running end, standing part, bight and loop.','running end ties|standing part stays'),
+  st('Whipping','Whip a natural-fiber rope end so it will not unravel.','as long as the rope|is thick'),
+  st('Fusing','Fuse a synthetic rope end, outdoors with an adult.','melt, then let it cool'),
+  st('Square knot','Right over left, then left over right.','right over left|left over right'),
+  st('Two half hitches','Around the post, then two half hitches around the standing part.','both hitches|turn the same way'),
+  st('Taut-line hitch','The adjustable loop for tent guy lines.','slide to adjust|holds under load'),
+  st('Teaching EDGE','Teach a teammate the square knot: Explain, Demonstrate, Guide, Enable.','Explain · Demonstrate|Guide · Enable')];
+ const W=[...T,st('Sheet bend','Join two ropes: bight in the thicker one, tails on the same side.','bight in the thick rope|tails on one side'),
+  st('Bowline','A fixed loop that will not slip or jam.','up the hole, round the tree|back down the hole')];
+ const B=[...W,st('Timber hitch','Loop around the pole and wrap the end around itself three or more times.','grips as you pull'),
+  st('Clove hitch','Two half hitches snugged together on a pole.','starts most lashings'),
+  st('Square lashing','Join two crossed poles; see the Signal Mast station for each step.','clove hitch, wraps,|fraps, finish')];
+ ST.s7.steps={T,W,B};
+ NINFO.s7={name:'Shipwreck Rope Challenge',skill:'Knots',res:[{t:'Animated Knots: Scouting knots',u:'https://www.animatedknots.com/scouting-knots'},{t:'Scouts BSA rank requirements (PDF)',u:REQ}],
+  ic:`<path d="M-18 6C-18-14 18-14 18 6S-6 20-6 4 12-8 4-14" fill="none" stroke="#8a6f2a" stroke-width="7" stroke-linecap="round"/><path d="M-18 6C-18-14 18-14 18 6S-6 20-6 4 12-8 4-14" fill="none" stroke="#e8cf8a" stroke-width="4" stroke-linecap="round"/>`};
+}
 /* ---- Learn It card order: basics first, then techniques; cards for higher levels only go last.
    Add new card names here; any card not listed is kept, after the listed ones. ---- */
 {const CARD_ORDER={
