@@ -252,7 +252,7 @@ function renderName(S){
   const draw=()=>{const list=items.filter(i=>f==='All'||i.c===f);
     $('#body').innerHTML=`<p class="tip">Look at the drawing and say the name out loud first. Then tap <b>Show details</b> to check. ${items.length} cards for the ${LV[LEVEL].name} level.</p>
     <div class="chips">${['All',...cats].map(c=>`<button aria-pressed="${c===f}">${c}</button>`).join('')}</div>
-    <div class="grid">${list.map((it,i)=>`<div class="card"><div class="art">${sv(it.d,'0 0 200 140')}</div><div class="body"><div class="cat">${it.c}</div><div class="nm" id="n${i}" hidden>${it.n}</div><div id="u${i}" hidden>${it.u}${it.h?`<p class="tip">${it.h}</p>`:''}${it.lk?`<p class="tip"><a href="${it.lk.u}" target="_blank" rel="noopener">${it.lk.t} ↗</a></p>`:''}</div><button class="rev" data-i="${i}">Show details</button><a class="see" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(it.q||it.n)}">See real photos ↗</a></div></div>`).join('')}</div>`;
+    <div class="grid">${list.map((it,i)=>`<div class="card"><div class="art">${sv(it.d,'0 0 200 140')}</div><div class="body"><div class="cat">${it.c}</div><div class="nm" id="n${i}" hidden>${it.n}</div><div id="u${i}" hidden>${it.u}${it.h?`<p class="tip">${it.h}</p>`:''}${[].concat(it.lk||[]).length?`<p class="tip lk">${[].concat(it.lk).map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${l.t} ↗</a>`).join('<br>')}</p>`:''}</div><button class="rev" data-i="${i}">Show details</button><a class="see" target="_blank" rel="noopener" href="https://www.google.com/search?tbm=isch&q=${encodeURIComponent(it.q||it.n)}">See real photos ↗</a></div></div>`).join('')}</div>`;
     document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{f=b.textContent;draw()});
     document.querySelectorAll('.rev').forEach(b=>b.onclick=()=>{const i=b.dataset.i;const h=document.getElementById('n'+i).hidden;document.getElementById('n'+i).hidden=!h;document.getElementById('u'+i).hidden=!h;b.textContent=h?'Hide details':'Show details'})};
   draw();
@@ -1211,6 +1211,130 @@ ST.s3.qb.push(
  Q('rod','TWB','A round lashing will not get tight. What helps?','Tap wedges between the poles above and below the lashing',['Use thinner rope','Wet the poles','Add more poles'],'Round lashings are hard to tighten; wedges are the common fix (Animated Knots).'),
  Q('guy','TWB','Why might a taut-line hitch slip?','Slippery synthetic rope, like polypropylene, can let it slide',['It is tied too neatly','The stake is too short','The sun is out'],'Modern slippery ropes may let this hitch slide, so check it under load (Animated Knots).')
 );
+/* ---- Learn It card details and sources: extra text (x) is added to the card's description, and links (l)
+   appear with the card's details. Page numbers are the printed pages of each pamphlet. ---- */
+{const FA='https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Pamphlets/First%20Aid.pdf',
+  PIO='https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Pamphlets/Pioneering.pdf',
+  ORI='https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Pamphlets/Orienteering.pdf',
+  WFA='https://filestore.scouting.org/filestore/pdf/680-008.pdf';
+ const fa=p=>({t:`First Aid merit badge pamphlet, p. ${p}`,u:FA}), pio=p=>({t:`Pioneering merit badge pamphlet, p. ${p}`,u:PIO}),
+  ori=p=>({t:`Orienteering merit badge pamphlet, p. ${p}`,u:ORI}), wfa=p=>({t:`Wilderness First Aid guidelines, p. ${p}`,u:WFA});
+ const NPR={t:'NPR: How to build a campfire',u:'https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire'},
+  LAYS={t:'Scout Life: 3 ways to lay a campfire',u:'https://scoutlife.org/outdoors/178473/3-different-ways-to-lay-the-firewood-for-a-campfire/'},
+  TIPS={t:'Scout Life: Tips to build a fire',u:'https://scoutlife.org/outdoors/1327/trail-tips-build-a-fire/'},
+  BEST={t:'Scouting magazine: How to build the best campfire',u:'https://scoutingmagazine.org/2016/02/how-to-build-the-best-campfire/'},
+  USGS={t:'USGS: Topographic map symbols',u:'https://www.usgs.gov/media/files/topographic-map-symbols'},
+  TLROR={t:'Troop Leader Resources: Orienteering',u:'https://troopleader.scouting.org/program-features/orienteering/'},
+  TLRNAV={t:'Troop Leader Resources: Navigation and measurements',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/'},
+  STICK={t:'Scouting America: The stick method',u:'https://www.scouting.org/cub-scout-activities/stick-method/'},
+  STEPS={t:'Scout Life: Measure distance by counting steps',u:'https://scoutlife.org/outdoors/outdoorarticles/165500/'},
+  SBE={t:'Scouting America: Scout Basic Essentials',u:'https://www.scouting.org/cub-scout-activities/scout-basic-essentials/'};
+ const CARD_INFO={
+ s1:{
+  'Fire triangle':{x:'Heat comes from matches or a lighter, oxygen from the air, and fuel from tinder, kindling and wood.',l:[NPR]},
+  'Fire site':{x:'Check local rules and fire danger first, and skip the fire if it is too dry or windy. Gravel, sand or bare earth away from trees and brush is best.',l:[LAYS,TIPS]},
+  'Water bucket':{x:'Have it ready before you light the fire, not after.',l:[TIPS]},
+  'Natural tinder':{x:'Use bone-dry, thin material no thicker than a wooden match: dry grass, bark shreds picked up from the ground, or fine wood shavings. Pile it loosely so air can reach it.',l:[BEST,NPR]},
+  'Kindling':{x:'Use bone-dry sticks from pencil-thin up to about thumb-thick; split pieces catch best. Add a few at a time so you do not smother the young fire.',l:[BEST,NPR]},
+  'Fuel wood':{x:'Gather dead, dry wood from a wide area away from camp, and add it only once the kindling is burning brightly. Adding thick wood too early is a common reason fires fail.',l:[BEST]},
+  'Teepee fire':{x:'Easy to light, and good where thin, dry branches are plentiful. Add bigger sticks the same way once it catches.',l:[LAYS,BEST]},
+  'Lean-to fire':{x:'Point the high end of the lean-to stick into the wind; the open side lets air feed the flames.',l:[LAYS,BEST]},
+  'Log cabin fire':{x:'It burns for a long time. Another way to build it: a small tinder-and-kindling teepee between the first two sticks, with pairs of sticks stacked crosswise around it.',l:[LAYS]}
+ },
+ s2:{
+  'Baseplate':{x:'It is clear so you can read the map through it, and its straight edge lines up bearings on the map.',l:[ori(8)]},
+  'Direction-of-travel arrow':{x:'When taking a bearing, point it at the target first.',l:[ori(9)]},
+  'Rotating housing (bezel)':{x:'Its 360-degree ring is read against the index line.',l:[ori(8)]},
+  'Index line':{x:'Also called the "read bearing here" mark.',l:[ori(8)]},
+  'Magnetic needle':{x:'The north end is colored, usually red, and settles quickly.',l:[ori(8)]},
+  'Orienting arrow':{x:'To take a bearing, turn the bezel until the orienting arrow lines up under the red end of the needle.',l:[ori(9)]},
+  'Orienting lines':{l:[ori(8),ori(18)]},
+  'Ruler / scale':{x:'Use it with the map\'s scale bar. A straight paper edge works too.',l:[ori('19-21')]},
+  'Woods (green)':{x:'On orienteering maps, shades of green show how hard the forest is to get through, from slow to nearly impassable.',l:[ori('14-15'),USGS]},
+  'Open land (white)':{x:'Orienteering maps are different: there, white means open, easy-to-run forest and yellow means open land.',l:[ori('14-15'),USGS]},
+  'Lake or pond (blue)':{x:'Blue marks all water: lakes, ponds, streams and springs.',l:[ori('14-15')]},
+  'Stream (blue line)':{l:[ori('14-15'),ori('38-39')]},
+  'Marsh (blue tufts)':{x:'Hatched blue lines are also used for swamps and marshes.',l:[ori('14-15')]},
+  'Trail (dashed black)':{x:'Black marks things people built; thin broken lines are trails.',l:[ori('14-15')]},
+  'Road':{x:'Solid black lines are paved or improved roads; broken lines are rough jeep roads.',l:[ori('14-15')]},
+  'Important road (red)':{l:[USGS]},
+  'Building (black square)':{l:[ori('14-15')]},
+  'Benchmark (X)':{l:[USGS]},
+  'Purple (aerial update)':{l:[USGS]},
+  'Contour line':{x:'Lines close together mean steep ground or cliffs; widely spaced lines mean gentle slopes.',l:[ori('11-12')]},
+  'Index contour':{x:'Every fifth contour is an index contour. Orienteering maps draw it bolder but leave it unlabeled.',l:[ori('11-12')]},
+  'Contour interval':{x:'USGS maps often use 20 or 40 feet; orienteering maps often use 3 or 5 meters.',l:[ori(11)]},
+  'Control marker':{x:'It hangs about head-high, directly over the feature described, and can be seen from about 25 meters away.',l:[ori(63),TLROR]},
+  'Control punch':{x:'Some events use an electronic chip instead of a punch.',l:[ori(26)]},
+  'Trail fork':{l:[TLROR]},
+  'Pace count':{x:'Uphill and in thick brush you take more paces per 100 m; downhill, fewer. Measure it again as you grow.',l:[ori('23-25'),STEPS]},
+  'Catching feature':{l:[ori(39)]},
+  'Route plan':{x:'Choose a route for each leg before you go; the fastest way is not always the straight line.',l:[ori('43-45')]},
+  'Declination diagram':{l:[ori(16)]},
+  'Map scale':{x:'1:24,000 means 1 inch on the map is 2,000 feet on the ground; at 1:10,000, 1 cm is 100 m.',l:[ori(13)]},
+  'Terrain association':{x:'Read ahead: know which features you should pass next, and check that the ground matches the map.',l:[ori(40)]},
+  'Hill':{l:[ori(12)]},
+  'Ridge':{l:[ori(12)]},
+  'Draw (valley)':{l:[ori(12)]},
+  'Saddle':{l:[ori(15)]},
+  'Aiming off':{l:[ori(40)]},
+  'Declination':{x:'From map to compass, add west declination and subtract east. Check the map\'s date, because declination changes over time.',l:[ori(16),ori(18)]}
+ },
+ s3:{
+  'Spars (poles)':{x:'Most are 2 to 4 inches thick at the butt and 6 to 12 feet long. Pick straight spars with little taper, and remove the bark so lashings do not slip.',l:[pio('55-56')]},
+  'Rope or lashing cord':{x:'Whip the ends so they do not unravel, dry wet rope before storing it, and coil it neatly when you are done.',l:[pio('11-13'),pio('40-45')]},
+  'Ground stakes':{x:'Pioneering stakes are about 2½ inches thick and 24 to 30 inches long, driven at about 20° leaning away from the pull. Never use tent pegs. Heavy loads need a 3-2-1 anchor or a log-and-stake anchor.',l:[pio('59-62')]},
+  'Mallet':{x:'Use a wooden mallet, not a metal sledge, so the stakes are not damaged.',l:[pio('60-61')]},
+  'Guy lines':{x:'Tie them about three-quarters of the way up the pole, and set each anchor about twice that height away from the base.',l:[pio(61)]},
+  'Signal mast':{x:'Like the pamphlet\'s Scout-stave flagpole, it stands up with guy lines and stakes.',l:[pio('66-67')]},
+  'Clove hitch':{l:[pio('17-19')]},
+  'Two half hitches':{x:'Add a roundturn first for extra grip on a ring or stake.',l:[pio('20-21')]},
+  'Taut-line hitch':{x:'Caution: the Pioneering merit badge pamphlet says never to use it in pioneering work, because a slip can make a structure unstable. For pioneering guy lines it teaches the rolling hitch and the rope tackle instead.',l:[pio(15),pio('21-23')]},
+  'Timber hitch':{l:[pio(31)]},
+  'Square lashing':{x:'The Pioneering pamphlet teaches the Japanese (Mark II) square lashing: three wraps and two frapping turns, tied off with a square knot.',l:[pio('29-31')]},
+  'Diagonal lashing':{x:'The pamphlet uses it where crossed braces do not touch; the triangles it creates keep a trestle from racking.',l:[pio(31)]},
+  'Shear lashing':{l:[pio('32-33')]},
+  'Round lashing':{x:'The pamphlet calls for 8 to 10 tight wraps and no frapping turns.',l:[pio(32)]},
+  'Tripod lashing':{l:[pio(34)]},
+  'Frapping turns':{l:[pio('29-31')]},
+  'Heel in the legs':{l:[pio(9)]},
+  'Supply crate weight test':{x:'Always run a complete test of a structure before anyone uses it.',l:[pio(9)]},
+  'Simple tripod base':{l:[pio(34),pio('64-66')]},
+  'Floor lashing':{x:'The pamphlet\'s method attaches each floor spar to the supports with bights of rope, then tightens and finishes with half hitches.',l:[pio('35-37')]}
+ },
+ s4:{
+  'Size up the scene':{x:'Look over the whole scene first: what caused the accident, what hazards are still there, how many victims there are, and whether bystanders can help.',l:[fa(15),wfa(6)]},
+  'Gloves':{x:'Treat all body fluids as possibly infectious. Wear nonlatex gloves, add a mask and eye shield if splashing is possible, wash your hands before and after, and never stop bleeding with bare hands.',l:[fa(19),fa(41)]},
+  "The 3 C's":{l:[fa('15-16')]},
+  'Call 911':{x:'Call right away for anything more than a minor injury or illness. In remote areas, send two or more people for help with a written note.',l:[fa(16)]},
+  'What to tell 911':{x:'A note for messengers should give the victim\'s location, injuries, time of injury and the care given so far.',l:[fa(17)]},
+  'A B C D E check':{x:'Take 15 to 20 seconds to check the airway, breathing and circulation, including severe bleeding and a pulse. Check the back for hidden bleeding, and look for a medical ID.',l:[fa('19-20'),wfa(7)]},
+  'Mechanism of injury (MOI)':{x:'Look for clues about the forces involved, like how far they fell and what they landed on. A bad mechanism can mean a spine injury.',l:[wfa(6),wfa(15)]},
+  'Shock':{x:'Treat every injured person for shock, even with no signs. Signs include anxiety, pale, cool, clammy skin, a quick, weak pulse, fast, shallow breathing, nausea and thirst. Keep them lying down, calm and warm, and treat the cause.',l:[fa('21-22'),wfa('12-13')]},
+  'Rapid evacuation':{x:'Move a patient only if there is immediate danger, with as little movement as possible and the spine protected.',l:[fa('27-33')]},
+  'CPR (A B C D)':{x:'CPR must be learned from a nationally certified instructor.',l:[fa(3),fa(20)]},
+  'S.A.M.P.L.E.':{x:'Ask open questions that do not suggest an answer.',l:[wfa(10)]},
+  'Head to toe (H2T)':{x:'Look and feel for DOTS: deformity, open wounds, tenderness and swelling. Ask alert patients where it hurts and whether they can move.',l:[fa(22),wfa(8)]},
+  'Level of response (A&O)':{x:'Fully awake and oriented means they know who they are, where they are, the time, and what happened.',l:[wfa(9)]},
+  'Heart rate (HR)':{x:'Count for 15 seconds and multiply by 4. Note whether it is strong or weak, regular or irregular.',l:[wfa(9)]},
+  'Respiratory rate (RR)':{x:'Count without the patient knowing. Scouting America\'s Wilderness First Aid guidelines list about 12 to 20 per minute as normal.',l:[wfa(9)]},
+  'Skin (SCTM)':{x:'Pale, cool, clammy skin can be a sign of shock.',l:[fa(21),wfa(9)]},
+  'Written SOAP notes':{x:'Write notes as soon as care allows, and record the time of each set of vital signs.',l:[wfa(10),fa(23)]},
+  'Plan of Action':{l:[wfa(10)]},
+  'Triage':{l:[fa(18)]},
+  'First aid kit':{x:'A personal kit has items like adhesive bandages, gauze, tape, gloves and a CPR breathing barrier. A patrol or troop kit adds roller and triangular bandages, a tourniquet and a SAM splint.',l:[fa('25-26')]},
+  '10 Scout essentials':{x:'Scouting America\'s Scout Basic Essentials: pocketknife, first aid kit, extra clothing, rain gear, water bottle, flashlight, trail food, matches and fire starters, sun protection, and map and compass.',l:[SBE]}
+ },
+ s6:{
+  'Scout staff or stick':{l:[STICK]},
+  'Pace count':{x:'One way: walk a measured 100-foot course, count your steps, and divide 100 by the count to get your step length.',l:[STEPS,STICK]},
+  'Personal measurements':{l:[TLRNAV]},
+  'Stick method (friend of known height)':{x:'Close one eye, line the stick\'s top up with your friend\'s head and your thumbnail with their feet, then "walk" that length up the object.',l:[STICK]},
+  'Felling (Lumberjack) Method':{x:'Another version: hold an arm-length stick straight up at arm\'s length and back away until its tip lines up with the top. You are now about as far away as the object is tall, so count your steps back to it.',l:[STICK]},
+  'River width (stick method)':{l:[TLRNAV]}
+ }};
+ for(const id in CARD_INFO)for(const it of ST[id].items){const c=CARD_INFO[id][it.n];if(!c)continue;
+  if(c.x)it.u=it.u+' '+c.x;it.lk=[].concat(it.lk||[],c.l||[])}}
 /* ---- Learn It card order: basics first, then techniques; cards for higher levels only go last.
    Add new card names here; any card not listed is kept, after the listed ones. ---- */
 {const CARD_ORDER={
