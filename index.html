@@ -50,6 +50,8 @@ button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid 
 .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px}
 .back{font:600 14px var(--disp);padding:8px 12px;border-radius:6px;border:2px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer}
 .stt{font-size:clamp(22px,4vw,32px);font-weight:800;margin:0;line-height:1.1}
+.skn{color:var(--mute);font-weight:600}
+.res{margin:8px 0 0;font-size:14px;color:var(--mute);max-width:80ch}.res a{color:var(--blue)}
 nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 16px;border-bottom:2px solid var(--line)}
 nav.tabs button{font:600 15px var(--disp);background:none;border:0;color:var(--mute);padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
 nav.tabs button[aria-selected=true]{color:var(--fg);border-bottom-color:var(--acc)}
@@ -163,18 +165,18 @@ function drawGlv(){
     if(!$('#st').hidden){openStation(cur.id,cur.tab)}else drawMap()});
 }
 /* ---------- landing map ---------- */
-/* Station order on the map. To add a station: define ST.<id> and NINFO.<id>, then add the id here.
+/* Station order on the map. To add a station: define ST.<id> and NINFO.<id> (name, skill, res = learn-more links, ic = map icon), then add the id here.
    Ids are stable keys (saved scores use them), so never reuse or renumber an old id.
    Map positions are spread automatically; ids listed here but not in LIVE show as locked "coming soon". */
 const ORDER=['s1','s2','s3','s4','s6'];
 const LIVE=['s1','s2','s3','s4','s6'];
 const NODES=ORDER.map((id,i)=>({id,x:ORDER.length<2?480:Math.round(110+i*740/(ORDER.length-1)),y:i%2?195:325}));
 const NINFO={
- s1:{name:'Hot Cocoa Reward Challenge',ic:`<path d="M0-20C10-8 14-2 10 8 7 15-7 15-10 8-13 1-6-4 0-20Z" fill="#ff7a1a"/><path d="M0-6C5 0 6 4 3 9-2 11-6 8-4 3Z" fill="#ffd23f"/>`},
- s2:{name:'Hidden Idol Hunt',ic:`<circle r="16" fill="#fff" stroke="#14202e" stroke-width="3"/><path d="M0-12 5 0 0 12-5 0Z" fill="#d33"/><path d="M0 12 5 0 0 0Z" fill="#14202e"/>`},
- s3:{name:'Signal Mast Challenge',ic:`<path d='M0-20V16M0 16-12 18M0 16 12 18M0-6-12 16M0-6 12 16' stroke='#14202e' stroke-width='3' fill='none' stroke-linecap='round'/><path d='M1-20 16-14 1-8Z' fill='#e8402a' stroke='#14202e' stroke-width='1.5'/>`},
- s4:{name:'Medevac First Aid Challenge',ic:`<rect x="-16" y="-16" width="32" height="32" rx="6" fill="#fff"/><path d="M-4-12h8v8h8v8h-8v8h-8v-8h-8v-8h8Z" fill="#d33"/>`},
- s6:{name:'Lookout Tower Height Challenge',ic:`<path d='M-10 18-5-2M10 18 5-2M-8 10 8 2M8 10-8 2' stroke='#6e4524' stroke-width='3' fill='none'/><rect x='-11' y='-4' width='22' height='4' fill='#8a5a2b'/><rect x='-7' y='-12' width='14' height='8' fill='#b98a54'/><path d='M-12-11 0-21 12-11Z' fill='#c9a24a' stroke='#7a5a12' stroke-width='1.5'/>`}
+ s1:{name:'Hot Cocoa Reward Challenge',skill:'Fire Building',res:[{t:'Fire Building (Troop Leader Resources)',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/'}],ic:`<path d="M0-20C10-8 14-2 10 8 7 15-7 15-10 8-13 1-6-4 0-20Z" fill="#ff7a1a"/><path d="M0-6C5 0 6 4 3 9-2 11-6 8-4 3Z" fill="#ffd23f"/>`},
+ s2:{name:'Hidden Idol Hunt',skill:'Orienteering',res:[{t:'Orienteering program feature (Troop Leader Resources)',u:'https://troopleader.scouting.org/program-features/orienteering/'},{t:'Navigation and Measurements: compass and map skills',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/'}],ic:`<circle r="16" fill="#fff" stroke="#14202e" stroke-width="3"/><path d="M0-12 5 0 0 12-5 0Z" fill="#d33"/><path d="M0 12 5 0 0 0Z" fill="#14202e"/>`},
+ s3:{name:'Signal Mast Challenge',skill:'Lashing & Pioneering',res:[{t:'Lashings: square, diagonal, floor, tripod and more',u:'https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/'},{t:'Pioneering program feature: projects, ropes and spars',u:'https://troopleader.scouting.org/program-features/pioneering/information/'}],ic:`<path d='M0-20V16M0 16-12 18M0 16 12 18M0-6-12 16M0-6 12 16' stroke='#14202e' stroke-width='3' fill='none' stroke-linecap='round'/><path d='M1-20 16-14 1-8Z' fill='#e8402a' stroke='#14202e' stroke-width='1.5'/>`},
+ s4:{name:'Medevac First Aid Challenge',skill:'First Aid',res:[{t:'First Aid program feature (Troop Leader Resources)',u:'https://troopleader.scouting.org/program-features/first-aid/information/'}],ic:`<rect x="-16" y="-16" width="32" height="32" rx="6" fill="#fff"/><path d="M-4-12h8v8h8v8h-8v8h-8v-8h-8v-8h8Z" fill="#d33"/>`},
+ s6:{name:'Lookout Tower Height Challenge',skill:'Measuring Heights',res:[{t:'Navigation and Measurements: measuring heights and widths',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/'}],ic:`<path d='M-10 18-5-2M10 18 5-2M-8 10 8 2M8 10-8 2' stroke='#6e4524' stroke-width='3' fill='none'/><rect x='-11' y='-4' width='22' height='4' fill='#8a5a2b'/><rect x='-7' y='-12' width='14' height='8' fill='#b98a54'/><path d='M-12-11 0-21 12-11Z' fill='#c9a24a' stroke='#7a5a12' stroke-width='1.5'/>`}
 };
 
 let pathLens=[],mapBuilt=false,scoutAt=0;
@@ -189,11 +191,11 @@ function drawMap(){
    <circle cy="-44" r="10" fill="#f0c9a0"/><path d="M-10-45a10 10 0 0 1 20 0c-3-6-17-6-20 0Z" fill="#2a1a10"/><path d="M8-48c6 2 7 10 3 16" stroke="#2a1a10" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="-3.5" cy="-44" r="1.3" fill="#222"/><circle cx="3.5" cy="-44" r="1.3" fill="#222"/>
    <path d="M-3-40q3 2 6 0" stroke="#a0522d" stroke-width="1.2" fill="none"/></g></g>`;
   const nodes=NODES.map((n,i)=>{const I=NINFO[n.id],live=LIVE.includes(n.id);const stz=starsOf(n.id);
-    return `<g class="node${live?'':' locked'}" tabindex="0" role="button" aria-label="Station ${i+1}: ${I.name}${live?'':' (coming soon)'}" data-i="${i}" transform="translate(${n.x},${n.y})">
+    return `<g class="node${live?'':' locked'}" tabindex="0" role="button" aria-label="Station ${i+1}: ${I.name} (${I.skill})${live?'':' (coming soon)'}" data-i="${i}" transform="translate(${n.x},${n.y})">
      <circle class="ring" r="40" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="4 6"/><g class="disc"><circle r="32" fill="${live?'#fff':'#cfd6de'}" stroke="#14202e" stroke-width="4"/><g transform="translate(0,2)">${I.ic}</g></g>
      <circle cx="-26" cy="-26" r="13" fill="#e8402a" stroke="#fff" stroke-width="3"/>${tx(-26,-21,i+1,{s:15,f:'#fff',w:800})}
      ${live?'':`<g transform="translate(24,-26)"><rect x="-10" y="-8" width="20" height="16" rx="3" fill="#6b7c8f"/><path d="M-5-8v-4a5 5 0 0 1 10 0v4" stroke="#6b7c8f" stroke-width="3" fill="none"/></g>`}
-     ${stz?tx(0,60,stz,{s:16,f:'#ffd23f'}):''}</g>`}).join('');
+     <g class="skl"><rect x="${-I.skill.length*4.1-10}" y="42" width="${I.skill.length*8.2+20}" height="22" rx="11" fill="#14202e" opacity=".85"/>${tx(0,58,I.skill,{s:13,f:'#fff'})}</g>${stz?tx(0,84,stz,{s:16,f:'#ffd23f'}):''}</g>`}).join('');
   $('#map').innerHTML=`<div class="world">${sv(`
    <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa8ff"/><stop offset="1" stop-color="#bfe6ff"/></linearGradient></defs>
    <rect width="960" height="440" fill="url(#sky)"/>
@@ -208,7 +210,7 @@ function drawMap(){
    <path id="road" d="${pd}" fill="none" stroke="#7a5230" stroke-width="22" stroke-linecap="round"/><path d="${pd}" fill="none" stroke="#e6c48a" stroke-width="16" stroke-linecap="round"/><path d="${pd}" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>
    <g transform="translate(0,118)"><g transform="translate(888,0)"><rect x="-3" y="-30" width="6" height="70" fill="#6e4524"/><path d="M-9-34h18l-4 8h-10Z" fill="#c9a24a" stroke="#7a5a12" stroke-width="1.5"/><g class="fl"><path d="M0-62C9-50 12-44 8-38 4-33-4-33-8-38-11-44-6-50 0-62Z" fill="#ff7a1a"/><path d="M0-48C4-44 5-40 2-37-2-36-4-39-2-43Z" fill="#ffd23f"/></g></g><g transform="translate(922,0)"><rect x="-3" y="-30" width="6" height="70" fill="#6e4524"/><path d="M-9-34h18l-4 8h-10Z" fill="#c9a24a" stroke="#7a5a12" stroke-width="1.5"/><g class="fl"><path d="M0-62C9-50 12-44 8-38 4-33-4-33-8-38-11-44-6-50 0-62Z" fill="#ff7a1a"/><path d="M0-48C4-44 5-40 2-37-2-36-4-39-2-43Z" fill="#ffd23f"/></g></g></g>
    ${nodes}${sc}`,'0 0 960 440')}</div>
-   <div class="slist">${NODES.map((n,i)=>{const live=LIVE.includes(n.id);return `<button class="sbtn" data-i="${i}"${live?'':' disabled'}><span class="n">${i+1}</span><span>${NINFO[n.id].name}<small>${live?'Name It · Build It · Test Yourself':'Coming soon'} <span class="stars">${starsOf(n.id)}</span></small></span></button>`}).join('')}</div>`;
+   <div class="slist">${NODES.map((n,i)=>{const live=LIVE.includes(n.id);return `<button class="sbtn" data-i="${i}"${live?'':' disabled'}><span class="n">${i+1}</span><span>${NINFO[n.id].name} (${NINFO[n.id].skill})<small>${live?'':'Coming soon'} <span class="stars">${starsOf(n.id)}</span></small></span></button>`}).join('')}</div>`;
   const road=document.getElementById('road');const L=road.getTotalLength();
   pathLens=NODES.map(n=>{let bi=0,bd=1e9;for(let s=0;s<=600;s++){const p=road.getPointAtLength(L*s/600);const d=(p.x-n.x)**2+(p.y-n.y)**2;if(d<bd){bd=d;bi=s}}return L*bi/600});
   document.querySelectorAll('.node,.sbtn').forEach(el=>{const go=()=>{const i=+el.dataset.i;const n=NODES[i];if(!LIVE.includes(n.id))return;walkTo(i)};
@@ -231,8 +233,9 @@ let cur={id:null,tab:'name'};
 function openStation(id,tab){
   cur={id,tab:tab||'name'};const S=ST[id];
   $('#map').hidden=true;$('#st').hidden=false;$('#lvbox').hidden=false;stopAuto();stopClock();
-  $('#st').innerHTML=`<div class="top"><button class="back" id="bk">← Map</button><h2 class="stt">Station ${ORDER.indexOf(S.id)+1}: ${S.name}</h2></div>
+  $('#st').innerHTML=`<div class="top"><button class="back" id="bk">← Map</button><h2 class="stt">Station ${ORDER.indexOf(S.id)+1}: ${S.name} <span class="skn">(${NINFO[S.id].skill})</span></h2></div>
   <p class="sub">${S.scenario}</p>
+  ${(NINFO[S.id].res||[]).length?`<p class="res"><b>Learn more:</b> ${NINFO[S.id].res.map(r=>`<a href="${r.u}" target="_blank" rel="noopener">${r.t} ↗</a>`).join('<span aria-hidden="true"> · </span>')}</p>`:''}
   <nav class="tabs" role="tablist">${[['name','Name It'],['build','Build It'],['test','Test Yourself']].map(([k,t])=>`<button role="tab" data-k="${k}" aria-selected="${k===cur.tab}">${t}</button>`).join('')}</nav><div id="body"></div>`;
   $('#bk').onclick=()=>{stopAuto();stopClock();drawMap();window.scrollTo(0,0)};
   document.querySelectorAll('nav.tabs button').forEach(b=>b.onclick=()=>{cur.tab=b.dataset.k;stopAuto();stopClock();document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));renderTab()});

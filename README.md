@@ -3,7 +3,7 @@
 **Survivor: T321 Edition: a mobile-friendly practice trainer for Scouts BSA Troop 321.**
 Each patrol is a tribe and each skill station is a challenge. Scouts learn the stations at home and test themselves before the patrol competition. Every station adapts to three patrol levels: **Beginner**, **Intermediate** and **Advanced**.
 
-**Live trainer:** https://samerhaj.github.io/troop-skills-trainer/
+**Live trainer:** https://samerhaj.github.io/troop321-skills-trainer/
 
 ![Map of the skill stations](screenshots/1-map.png)
 
@@ -39,6 +39,18 @@ Requirements and scoring differ by level, so the steps, judge checklist, time li
 
 More stations will be added over time.
 
+Each station shows its skill name in the title and on the map, and links to Scouting America's Troop Leader Resources for that skill.
+
+## Resources
+
+Skill references linked from the stations ([Troop Leader Resources](https://troopleader.scouting.org/)):
+
+- Fire building: [Fire Building](https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/)
+- Orienteering: [Orienteering program feature](https://troopleader.scouting.org/program-features/orienteering/), [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/)
+- Lashing and pioneering: [Lashings](https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/), [Pioneering program feature](https://troopleader.scouting.org/program-features/pioneering/information/)
+- First aid: [First Aid program feature](https://troopleader.scouting.org/program-features/first-aid/information/)
+- Measuring heights: [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/) (measuring heights and widths)
+
 ## How it was built
 
 - **One self-contained HTML file.** No server, no install, no tracking. It also works offline once saved.
@@ -51,7 +63,7 @@ More stations will be added over time.
 
 Everything lives in `index.html`. Use an existing station (for example `ST.s4`, First Aid) as the template.
 
-1. **Map entry.** Add the station's name and map icon to `NINFO`, then add its id to `ORDER` and `LIVE`. Map positions and station numbers are worked out from `ORDER`, so reordering that array reorders the map. An id in `ORDER` but not in `LIVE` shows as a locked "coming soon" stop.
+1. **Map entry.** Add the station's name, `skill` name, `res` (learn-more links) and map icon to `NINFO`, then add its id to `ORDER` and `LIVE`. Map positions and station numbers are worked out from `ORDER`, so reordering that array reorders the map. An id in `ORDER` but not in `LIVE` shows as a locked "coming soon" stop.
 2. **Station data.** Define `ST.<id>` with `name`, `scenario`, `time`, `goal`, `judge`, `items` (Name It cards), `cats` (rubric lines and their points per level), `qb` (question bank), and `steps` (Build It scenes).
 3. **Levels.** Level keys are `T` (Beginner), `W` (Intermediate) and `B` (Advanced). They are internal ids only; `lv:'TWB'` means "all levels", `lv:'WB'` means Intermediate and Advanced. Display names live in one place, the `LV` object.
 4. **Ids are permanent.** Saved best scores are stored per station id, so never reuse or renumber an old id. That is why the fifth station's id is `s6`: the original Station 5 was removed.
