@@ -36,7 +36,7 @@ Requirements and scoring differ by level, so the steps, judge checklist, time li
 | 3 | Knots (Scout, Tenderfoot, Second Class and First Class rank knots) | Shipwreck Rope Challenge |
 | 4 | Lashing and pioneering | Signal Mast Challenge |
 | 5 | First aid | Medevac First Aid Challenge |
-| 6 | Poisonous plants of NC, SC, GA and VA, and harmless look-alikes (identification, prevention, first aid) | Poison Jungle Challenge |
+| 6 | Poisonous plants of NC, SC, GA and VA, and harmless look-alikes (identification, prevention, first aid) | Poison Ivy Patrol (a prop plant trail, a firewood check and a UV contamination test) |
 | 7 | Snakes, spiders and critters of NC, SC, GA and VA, venomous and harmless (identification, encounters, bites and stings) | Snake Trail Gauntlet (a prop trail with rubber snakes and critters, plus an acted snakebite) |
 | 8 | Orienteering (map and compass) | Hidden Treasure Hunt |
 | 9 | Orienteering (estimating height) | Lookout Tower Height Challenge |
