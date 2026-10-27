@@ -165,13 +165,25 @@ function drawGlv(){
 }
 /* ---------- map scout: boy or girl, remembered per device ---------- */
 let SCOUT='boy';try{const v=localStorage.getItem('cp-scout');if(v==='boy'||v==='girl')SCOUT=v}catch(e){}
-const scoutFig=k=>`<ellipse cx="0" cy="2" rx="14" ry="4" fill="#0003"/>
-   <g class="lg1"><rect x="-7" y="-14" width="6" height="14" rx="3" fill="#5b6b3a"/></g><g class="lg2"><rect x="1" y="-14" width="6" height="14" rx="3" fill="#6f7f48"/></g>
-   <rect x="-10" y="-34" width="20" height="22" rx="6" fill="#c8b48a"/><path d="M-9-33 0-24 9-33Z" fill="#1a8f4c"/><rect x="-10" y="-20" width="20" height="4" fill="#6b4a2a"/>
-   <circle cy="-44" r="10" fill="#f0c9a0"/>${k==='girl'
-    ?'<path d="M-10-45a10 10 0 0 1 20 0c-3-6-17-6-20 0Z" fill="#2a1a10"/><path d="M8-48c6 2 7 10 3 16" stroke="#2a1a10" stroke-width="4" fill="none" stroke-linecap="round"/>'
-    :'<path d="M-10.5-44.5C-11-53-5-56 0-56S11-53 10.5-44.5C9-49 6-50 3-49.5-1-51-6-50-10.5-44.5Z" fill="#2a1a10"/><path d="M-10.5-45-10-41" stroke="#2a1a10" stroke-width="2.5" stroke-linecap="round"/><path d="M10.5-45 10-41" stroke="#2a1a10" stroke-width="2.5" stroke-linecap="round"/>'}
-   <circle cx="-3.5" cy="-44" r="1.3" fill="#222"/><circle cx="3.5" cy="-44" r="1.3" fill="#222"/><path d="M-3-40q3 2 6 0" stroke="#a0522d" stroke-width="1.2" fill="none"/>`;
+const scoutFig=k=>{const g=k==='girl',SK='#f0c9a0';
+ const legs=`<ellipse cx="0" cy="2" rx="14" ry="4" fill="#0003"/><g class="lg1"><rect x="-7" y="-14" width="6" height="14" rx="3" fill="#5b6b3a"/></g><g class="lg2"><rect x="1" y="-14" width="6" height="14" rx="3" fill="#6f7f48"/></g>`;
+ const body=`<rect x="-10" y="-34" width="20" height="22" rx="6" fill="#c8b48a"/><path d="M-9-33 0-24 9-33Z" fill="#1a8f4c"/><rect x="-10" y="-20" width="20" height="4" fill="#6b4a2a"/>`;
+ const eyes=`<circle cx="-3.5" cy="-44" r="1.3" fill="#222"/><circle cx="3.5" cy="-44" r="1.3" fill="#222"/>`;
+ if(g){const H='#6b3d1e';
+  return legs
+   +`<path d="M-11.5-46C-14-32-13-26-9-24H9C13-26 14-32 11.5-46Z" fill="${H}"/>`      /* long hair behind, to the shoulders */
+   +body+`<circle cy="-44" r="10" fill="${SK}"/>`
+   +`<path d="M-10.5-43C-11-53-5-55.5 0-55.5S11-53 10.5-43C8-47 4-49 0-48.5-4-49-8-47-10.5-43Z" fill="${H}"/>`  /* bangs */
+   +`<path d="M-10.5-45C-12-38-11.5-32-10-28M10.5-45C12-38 11.5-32 10-28" stroke="${H}" stroke-width="4" fill="none" stroke-linecap="round"/>`
+   +`<g transform="translate(7.5,-52.5)"><path d="M0 0-5.5-4.5V4.5ZM0 0 5.5-4.5V4.5Z" fill="#e8508a" stroke="#b02a62" stroke-width=".6"/><circle r="1.9" fill="#b02a62"/></g>`  /* hair bow */
+   +eyes+`<path d="M-6.2-46.3l-1.4-1.5M6.2-46.3l1.4-1.5" stroke="#222" stroke-width=".9" stroke-linecap="round"/>`  /* lashes */
+   +`<path d="M-3-40q3 2 6 0" stroke="#c2306a" stroke-width="1.3" fill="none"/>`}
+ const H='#2a1a10';
+ return legs+body
+  +`<circle cx="-10" cy="-44" r="2.4" fill="${SK}"/><circle cx="10" cy="-44" r="2.4" fill="${SK}"/><circle cy="-44" r="10" fill="${SK}"/>`
+  +`<path d="M-10.5-45C-11-51-6-53.5 0-53.5S11-51 10.5-45C8-48 4-48.5 0-48-4-48.5-8-48-10.5-45Z" fill="${H}"/>`  /* short hair */
+  +`<path d="M-10-50C-10-57-5-60 0-60S10-57 10-50Z" fill="#4f5d2f" stroke="#38431f" stroke-width="1"/><path d="M-12-49.5H8C14-49.5 15-47 13-46H-12Z" fill="#38431f"/><circle cy="-56" r="1.6" fill="#c8a43a"/>`  /* Scout cap */
+  +eyes+`<path d="M-3-40q3 2 6 0" stroke="#a0522d" stroke-width="1.2" fill="none"/>`};
 /* ---------- landing map ---------- */
 /* Station order on the map. To add a station: define ST.<id> and NINFO.<id> (name, skill, res = learn-more links, ic = map icon), then add the id here.
    Ids are stable keys (saved scores use them), so never reuse or renumber an old id.
@@ -200,7 +212,7 @@ function drawMap(){
      <circle cx="-26" cy="-26" r="13" fill="#e8402a" stroke="#fff" stroke-width="3"/>${tx(-26,-21,i+1,{s:15,f:'#fff',w:800})}
      ${live?'':`<g transform="translate(24,-26)"><rect x="-10" y="-8" width="20" height="16" rx="3" fill="#6b7c8f"/><path d="M-5-8v-4a5 5 0 0 1 10 0v4" stroke="#6b7c8f" stroke-width="3" fill="none"/></g>`}
      <g class="skl"><rect x="${-I.skill.length*4.1-10}" y="42" width="${I.skill.length*8.2+20}" height="22" rx="11" fill="#14202e" opacity=".85"/>${tx(0,58,I.skill,{s:13,f:'#fff'})}</g>${stz?tx(0,84,stz,{s:16,f:'#ffd23f'}):''}</g>`}).join('');
-  $('#map').innerHTML=`<div class="scpick" role="group" aria-label="Choose your scout"><span class="lvlab">Your scout</span>${[['boy','Boy'],['girl','Girl']].map(([k,t])=>`<button data-s="${k}" aria-pressed="${k===SCOUT}"><svg viewBox="-14 -60 28 64" width="18" height="40" aria-hidden="true">${scoutFig(k)}</svg>${t}</button>`).join('')}</div><div class="world">${sv(`
+  $('#map').innerHTML=`<div class="scpick" role="group" aria-label="Choose your scout"><span class="lvlab">Your scout</span>${[['boy','Boy'],['girl','Girl']].map(([k,t])=>`<button data-s="${k}" aria-pressed="${k===SCOUT}"><svg viewBox="-16 -62 32 66" width="30" height="62" aria-hidden="true">${scoutFig(k)}</svg>${t}</button>`).join('')}</div><div class="world">${sv(`
    <defs><radialGradient id="sea" cx="50%" cy="50%" r="75%"><stop offset="0" stop-color="#4fb4e6"/><stop offset="1" stop-color="#1f74b5"/></radialGradient></defs>
    <rect width="960" height="440" fill="url(#sea)"/>
    ${[[90,30],[250,20],[520,16],[760,22],[930,300],[640,430],[300,432],[20,250],[940,40]].map(([x,y])=>`<path d="M${x-14} ${y}q7-6 14 0t14 0" fill="none" stroke="#bfe6ff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>`).join('')}
