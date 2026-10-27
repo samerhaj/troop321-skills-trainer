@@ -36,8 +36,9 @@ Requirements and scoring differ by level, so the steps, judge checklist, time li
 | 3 | Knots (Scout, Tenderfoot, Second Class and First Class rank knots) | Shipwreck Rope Challenge |
 | 4 | Lashing and pioneering | Signal Mast Challenge |
 | 5 | First aid | Medevac First Aid Challenge |
-| 6 | Orienteering (map and compass) | Hidden Treasure Hunt |
-| 7 | Orienteering (estimating height) | Lookout Tower Height Challenge |
+| 6 | Poisonous plants, snakes and critters (identification, first aid, encounters) | Jungle Trek Hazard Challenge |
+| 7 | Orienteering (map and compass) | Hidden Treasure Hunt |
+| 8 | Orienteering (estimating height) | Lookout Tower Height Challenge |
 
 More stations will be added over time.
 
@@ -57,6 +58,7 @@ Skill references linked from the stations ([Troop Leader Resources](https://troo
 - Knots: [Troop Leader Resources: Basic knots](https://troopleader.scouting.org/rank-advancement-skills/campcraft/basic-knots/), [Scouts BSA rank requirements (2025)](https://www.scouting.org/wp-content/uploads/2026/02/3321625-Scouts-BSA-Requirements.pdf) and [Animated Knots: Scouting knots](https://www.animatedknots.com/scouting-knots)
 - Lashing and pioneering: [Lashings](https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/), [Pioneering program feature](https://troopleader.scouting.org/program-features/pioneering/information/), and step-by-step lashing and hitch animations from [Animated Knots](https://www.animatedknots.com/scouting-knots)
 - First aid: [First Aid program feature](https://troopleader.scouting.org/program-features/first-aid/information/)
+- Poisonous plants, snakes and critters: [First Aid merit badge pamphlet](https://filestore.scouting.org/filestore/Merit_Badge_ReqandRes/Pamphlets/First%20Aid.pdf) and the Reptile and Amphibian Study merit badge pamphlet (cited, not linked), [Scouts BSA rank requirements](https://www.scouting.org/wp-content/uploads/2026/02/3321625-Scouts-BSA-Requirements.pdf) (Tenderfoot 4a–4d, Second Class 6a–6c), [Guide to Safe Scouting: Animal and insect hazards](https://www.scouting.org/health-and-safety/gss/gss13/), [Scouting magazine: Found a tick?](https://onscouting.org/2026/07/02/found-a-tick-heres-what-to-do/), CDC pages on [venomous snakes](https://www.cdc.gov/niosh/outdoor-workers/about/venomous-snakes.html), [poisonous plants](https://www.cdc.gov/niosh/outdoor-workers/about/poisonous-plants.html), [venomous spiders](https://www.cdc.gov/niosh/outdoor-workers/about/venomous-spiders.html), [insects and scorpions](https://www.cdc.gov/niosh/outdoor-workers/about/insects-and-scorpions.html), [tick removal](https://www.cdc.gov/ticks/media/pdfs/2025/07/CDC_Tick_Removal_Fact_Sheet.pdf) and [bite prevention](https://www.cdc.gov/fight-the-bite/prevent/index.html), [Mayo Clinic: Animal bites](https://www.mayoclinic.org/first-aid/first-aid-animal-bites/basics/art-20056591), National Park Service [bear](https://www.nps.gov/subjects/bears/safety.htm) and [mountain lion](https://www.nps.gov/articles/mountain-lion-safety.htm) safety, [Leave No Trace: Respect wildlife](https://lnt.org/why/7-principles/respect-wildlife/), [Oregon State Extension: hemlocks](https://extension.oregonstate.edu/pests-diseases/weeds/poison-hemlock-western-water-hemlock-deadly-plants-may-be-growing-your-pasture) and [NY DEC: Giant hogweed](https://dec.ny.gov/sites/default/files/2026-05/ghposter.pdf)
 - Measuring heights: [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/) (measuring heights and widths)
 
 ## How it was built
