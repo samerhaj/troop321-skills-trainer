@@ -37,7 +37,7 @@ Requirements and scoring differ by level, so the steps, judge checklist, time li
 | 4 | Lashing and pioneering | Signal Mast Challenge |
 | 5 | First aid | Medevac First Aid Challenge |
 | 6 | Poisonous plants of NC, SC, GA and VA, and harmless look-alikes (identification, prevention, first aid) | Poison Jungle Challenge |
-| 7 | Snakes, spiders and critters of NC, SC, GA and VA, venomous and harmless (identification, encounters, bites and stings) | Jungle Critter Challenge |
+| 7 | Snakes, spiders and critters of NC, SC, GA and VA, venomous and harmless (identification, encounters, bites and stings) | Snake Trail Gauntlet (a prop trail with rubber snakes and critters, plus an acted snakebite) |
 | 8 | Orienteering (map and compass) | Hidden Treasure Hunt |
 | 9 | Orienteering (estimating height) | Lookout Tower Height Challenge |
 
