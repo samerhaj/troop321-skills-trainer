@@ -32,11 +32,12 @@ Requirements and scoring differ by level, so the steps, judge checklist, time li
 | # | Skill | Station |
 |---|---|---|
 | 1 | Fire building | Hot Cocoa Reward Challenge |
-| 2 | Knots (Scout, Tenderfoot, Second Class and First Class rank knots) | Shipwreck Rope Challenge |
-| 3 | Lashing and pioneering | Signal Mast Challenge |
-| 4 | First aid | Medevac First Aid Challenge |
-| 5 | Orienteering (map and compass) | Hidden Treasure Hunt |
-| 6 | Orienteering (estimating height) | Lookout Tower Height Challenge |
+| 2 | Knife, axe and saw (Totin' Chip) | Tribe Camp Build Challenge |
+| 3 | Knots (Scout, Tenderfoot, Second Class and First Class rank knots) | Shipwreck Rope Challenge |
+| 4 | Lashing and pioneering | Signal Mast Challenge |
+| 5 | First aid | Medevac First Aid Challenge |
+| 6 | Orienteering (map and compass) | Hidden Treasure Hunt |
+| 7 | Orienteering (estimating height) | Lookout Tower Height Challenge |
 
 More stations will be added over time.
 
@@ -52,6 +53,7 @@ Skill references linked from the stations ([Troop Leader Resources](https://troo
 
 - Fire building: [Fire Building](https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/), [NPR: Summer Science, How To Build A Campfire](https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire)
 - Orienteering: [Orienteering program feature](https://troopleader.scouting.org/program-features/orienteering/), [Navigation and Measurements](https://troopleader.scouting.org/rank-advancement-skills/campcraft/navigation-and-measurements/)
+- Knife, axe and saw: [Scouting America: Totin' Chip](https://www.scouting.org/awards/awards-central/totin-chip/), [Troop Leader Resources: Woods tools](https://troopleader.scouting.org/rank-advancement-skills/campcraft/woods-tools/), [Troop 60: Knife, axe and saw skills](https://www.troop60.co/resources/scout-skills/knife-axe-and-saw-skills), and Scout Life articles on [the ax](https://scoutlife.org/outdoors/157237/how-to-use-an-ax-to-chop-wood/), [sharpening an ax](https://scoutlife.org/outdoors/outdoorarticles/2247/how-to-sharpen-an-ax/) and [camp saws](https://scoutlife.org/video-audio/146361/how-to-use-a-camp-saw/); content also from Troop 321's own Totin' Chip card and woods-tools handouts
 - Knots: [Troop Leader Resources: Basic knots](https://troopleader.scouting.org/rank-advancement-skills/campcraft/basic-knots/), [Scouts BSA rank requirements (2025)](https://www.scouting.org/wp-content/uploads/2026/02/3321625-Scouts-BSA-Requirements.pdf) and [Animated Knots: Scouting knots](https://www.animatedknots.com/scouting-knots)
 - Lashing and pioneering: [Lashings](https://troopleader.scouting.org/rank-advancement-skills/pioneering/lashings/), [Pioneering program feature](https://troopleader.scouting.org/program-features/pioneering/information/), and step-by-step lashing and hitch animations from [Animated Knots](https://www.animatedknots.com/scouting-knots)
 - First aid: [First Aid program feature](https://troopleader.scouting.org/program-features/first-aid/information/)
