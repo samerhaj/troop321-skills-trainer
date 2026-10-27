@@ -188,8 +188,8 @@ const scoutFig=k=>{const g=k==='girl',SK='#f0c9a0';
 /* Station order on the map. To add a station: define ST.<id> and NINFO.<id> (name, skill, res = learn-more links, ic = map icon), then add the id here.
    Ids are stable keys (saved scores use them), so never reuse or renumber an old id.
    Map positions are spread automatically; ids listed here but not in LIVE show as locked "coming soon". */
-const ORDER=['s1','s8','s7','s3','s4','s9','s2','s6'];
-const LIVE=['s1','s8','s7','s3','s4','s9','s2','s6'];
+const ORDER=['s1','s8','s7','s3','s4','s9','s10','s2','s6'];
+const LIVE=['s1','s8','s7','s3','s4','s9','s10','s2','s6'];
 const NODES=ORDER.map((id,i)=>({id,x:ORDER.length<2?480:Math.round(110+i*740/(ORDER.length-1)),y:i%2?175:300}));
 const NINFO={
  s1:{name:'Hot Cocoa Reward Challenge',skill:'Fire Building',res:[{t:'Fire Building (Troop Leader Resources)',u:'https://troopleader.scouting.org/rank-advancement-skills/campcraft/fire-building/'},{t:'NPR: How to build a campfire',u:'https://www.npr.org/2012/06/04/154162859/summer-science-how-to-build-a-campfire'}],ic:`<path d="M0-20C10-8 14-2 10 8 7 15-7 15-10 8-13 1-6-4 0-20Z" fill="#ff7a1a"/><path d="M0-6C5 0 6 4 3 9-2 11-6 8-4 3Z" fill="#ffd23f"/>`},
@@ -1676,7 +1676,8 @@ ST.s3.qb.push(
   ic:`<path d="M-14 16 6-6" stroke="#8a5a2b" stroke-width="5" stroke-linecap="round"/><path d="M0-14H10L18-20C22-12 22-2 18 4L10 0H0Z" fill="#5b6671" stroke="#2f3a45" stroke-width="1.5"/><path d="M-16-12 14 14" stroke="#9aa5b1" stroke-width="3"/><rect x="-20" y="-16" width="9" height="7" rx="2" fill="#c0304a" transform="rotate(42 -16 -12)"/>`};
 }
 
-/* ================= STATION: Poisonous Plants, Snakes & Critters (id s9) — focused on NC, SC, GA and VA =================
+/* ================= STATIONS: Poisonous Plants (id s9) and Snakes, Spiders & Critters (id s10) — focused on NC, SC, GA and VA =================
+   All cards and questions live in one shared pool (ALL); each station picks its own cards, questions and levels at the end of this block.
    Sources: First Aid and Reptile and Amphibian Study merit badge pamphlets (they win when sources disagree, except
    snakebite limb position, which follows the CDC at Samer's request), NC/SC/GA/VA wildlife agencies and extensions,
    Scouts BSA rank requirements (Tenderfoot 4a-4c, Second Class 6a-6c), Guide to Safe Scouting "Animal and
@@ -1813,11 +1814,14 @@ ST.s3.qb.push(
   boxelder:bg('#eef3e4')+`<path d="M100 138V20" stroke="#6a9a4a" stroke-width="3.5"/>`+[[100,-1],[64,1]].map(([y,sd])=>[-1,1].map(s=>`<path d="M100 ${y}l${s*18} -6" stroke="#6a9a4a" stroke-width="2"/>${leaf(100+s*18,y-6,s*70,30,20,'#6aa84a',true,s<0)}${leaf(100+s*18,y-6,s*110,24,16,'#6aa84a')}${leaf(100+s*18,y-6,s*30,24,16,'#6aa84a')}`).join('')).join('')+`${leaf(100,22,0,30,20,'#6aa84a',true)}`+lab(100,136,'leaves in opposite pairs',0,10),
   harmlessMeet:bg('#e3e9d2')+`<g transform="translate(-6,46) scale(.55)">${''}</g>`
  });
+ D.exposure=bg('#eef3e4')+ivy3(46,112,.75)+ivy3(30,124,.5)+stand(130,100,1.2,'#5b8fd6','#3b4652')+`<circle cx="110" cy="94" r="6" fill="#e0a72e"/><circle cx="150" cy="94" r="6" fill="#e0a72e"/>`+lab(130,20,'long sleeves, long pants,',0,10)+lab(130,32,'boots and gloves',0,10)+X(60,46,.8)+lab(60,72,'keep off',R,10);
+ D.itch=bg('#f2f4f6')+`<path d="M10 92C40 80 120 80 160 84C176 86 184 96 176 106C140 110 60 112 16 108Z" fill="#f0c9a0" stroke="#b5835a" stroke-width="2"/>`+[[60,94],[66,98],[72,92],[78,100],[84,95],[90,90],[96,98]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#d84a4a"/>`).join('')+`<g transform="translate(150,44)"><rect x="-14" y="-24" width="28" height="44" rx="5" fill="#f4b8c8" stroke="#b05070" stroke-width="2"/><rect x="-7" y="-32" width="14" height="8" fill="#fff" stroke="#b05070"/></g>`+lab(150,80,'calamine',0,10)+lab(60,40,'cool compress,',0,10)+lab(60,54,'calamine or',0,10)+lab(60,68,'hydrocortisone',0,10)+lab(100,130,'do not scratch; no cream on broken skin',R,10);
+ D.mbPlant=bg('#f6f1e2')+[['First','Aid','#c0304a'],['Plant','Science','#4a9a48'],['Wilderness','Survival','#1f5fae']].map(([a,b,c],i)=>`<g transform="translate(${36+i*64},56)"><circle r="20" fill="${c}" stroke="#14202e" stroke-width="2"/><circle r="14" fill="none" stroke="#fff" stroke-width="1.5" opacity=".7"/>${tx(0,34,a,{s:10})}${tx(0,46,b,{s:10})}</g>`).join('');
  D.harmlessMeet=bg('#e3e9d2')+`<g transform="translate(-6,40) scale(.6)">${D.ratSnake.replace(/^<rect[^>]*>/,'')}</g>`+OK(160,40)+lab(150,76,'leave it alone,',GN,11)+lab(150,90,'let it go on',GN,11)+lab(150,104,'its way',GN,11)+lab(100,134,'not sure? treat it as venomous',R,10);
  D.snakeMeet=bg('#e9e2cc')+`<g transform="translate(-6,46) scale(.55)">${D.timber.replace(/^<rect[^>]*>/,'')}</g>`+stand(156,100,1,'#c8b48a')+arw(136,112,184,112,GN)+lab(140,26,'back away slowly',GN,11)+`<path d="M104 120H134" stroke="${R}" stroke-width="2" stroke-dasharray="4 4"/>`+lab(70,134,'give it lots of room',R,10);
  D.rash=bg('#f2f4f6')+`<path d="M10 82C40 70 120 70 160 74C176 76 184 86 176 96C140 100 60 102 16 98Z" fill="#f0c9a0" stroke="#b5835a" stroke-width="2"/>`+[[60,84],[66,88],[72,82],[78,90],[84,85],[90,80],[96,88],[70,92],[88,92]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.6" fill="#d84a4a"/>`).join('')+`<g transform="translate(140,38)"><rect x="-16" y="-16" width="32" height="32" rx="6" fill="#fff" stroke="#d33" stroke-width="2"/><path d="M-4-11h8v7h7v8h-7v7h-8v-7h-7v-8h7Z" fill="#d33"/></g>`+lab(70,40,'severe?',R,11)+lab(70,54,'face or genitals?',R,11)+lab(100,124,'swallowed or smoke breathed?',R,11)+lab(140,68,'see a doctor',0,10);
  const I=(c,n,u,d,id,lk,q,use,lv)=>({c,n,u,d,id,lk,q,use,lv});
- ST.s9={id:'s9',n:9,name:'Jungle Trek Hazard Challenge',
+ const ALL={
   scenario:'Your tribe must trek through the jungle to reach the reward. Poison ivy hangs along the trail, a rattlesnake rests under a log, ticks wait in the tall grass, and something big has been sniffing around camp. Spot each hazard, keep your tribe safe, and give first aid when a tribe-mate gets bitten or stung. 20 to 30 minutes, 50 points.',
   time:{T:20,W:25,B:30},
   clockNote:'The clock is set to your level\'s time.',
@@ -1846,6 +1850,9 @@ ST.s3.qb.push(
    I('Plant first aid','When to get help for a rash','Get medical help right away if the reaction is severe, the rash is on the face or genitals, plant parts were chewed or swallowed, or smoke from the plants was breathed in. Call 911 for swelling or trouble breathing. Do not put creams on broken skin.'+FA,D.rash,'x',[L_FA,L_CPL],'poison ivy rash doctor','Knowing when a rash is more than an itch.','WB'),
    I('Plant first aid','Never burn it','Never burn poison ivy, oak or sumac. The smoke carries the oil and can cause a severe breathing reaction. The oil also stays active on tools, gloves and gear for years, so clean them with rubbing alcohol or soap and water.',D.noBurn,'x',[L_CPL],'do not burn poison ivy smoke','Choosing firewood and cleaning up after a work project.'),
    I('Plant first aid','Never eat wild plants','Never eat wild plants, berries, roots or mushrooms unless an expert has identified them. Deadly plants like poison hemlock have been mistaken for wild parsnip. If someone swallows an unknown plant, call Poison Control or 911.',D.noEat,'x',[L_OSU],'poisonous berries mushrooms','Staying safe when a "snack" looks tempting.'),
+   I('Plant first aid','Preventing exposure','Learn what poison ivy, Atlantic poison oak and poison sumac look like where you camp, and stay on the trail. Wear long sleeves, long pants, boots and gloves when you work in brush. Handle contaminated tools, clothing and gear carefully, and never touch your face before you wash. (First Aid merit badge pamphlet)',D.exposure,'x',[L_FA,L_CPL],'poison ivy prevention clothing','Preventing injuries on a campout (Tenderfoot 4c).'),
+   I('Plant first aid','Treating the itch','Wet compresses, calamine lotion or hydrocortisone cream reduce itching and blistering; oatmeal baths may help too. Follow the product directions and do not put creams on broken skin. Try not to scratch. An antihistamine like diphenhydramine can help, but it can make you drowsy, so use it only as directed and with a parent or leader\'s OK.',D.itch,'x',[L_CPL],'poison ivy rash treatment calamine','Caring for a rash after the trip.'),
+   I('Gear','Go further: plant merit badges','Learn more in the First Aid, Plant Science and Wilderness Survival merit badges.',D.mbPlant,'x',[L_FA],'plant science merit badge','Your next steps after this station.'),
    /* snakes */
    I('Snakes','Timber (canebrake) rattlesnake','A large rattlesnake with dark, V-shaped crossbands on a gray, tan or yellowish body and a black tail. In the coastal plain it is called the canebrake rattlesnake. It lives in NC, SC and GA, and in Virginia only in the western mountains and a small area of the far southeast, where it is state-endangered. It does not always rattle before biting. (Reptile and Amphibian Study merit badge pamphlet)',D.timber,'s',[L_RA,L_VAD,L_SCD],'timber rattlesnake canebrake','Hiking rocky mountain trails and coastal-plain woods.'),
    I('Snakes','Eastern diamondback rattlesnake','The largest venomous snake in the US, with dark diamonds outlined in cream down its back. It lives in the coastal plain of Georgia and South Carolina and is very rare in North Carolina. It is not found in Virginia. (Reptile and Amphibian Study merit badge pamphlet)',D.diamondback,'s',[L_RA,L_SRL],'eastern diamondback rattlesnake','Camping in sandy pine woods of coastal Georgia and South Carolina.'),
@@ -2048,7 +2055,13 @@ ST.s3.qb.push(
    Q('severe','B','A scout ate unknown berries. What do you do?','Call Poison Control or 911 and give nothing by mouth unless they say to',['Make them eat more to be sure','Wait for symptoms','Give them a big drink of milk'],'First Aid merit badge pamphlet.'),
    Q('severe','B','A swallowed poison is what kind of first aid case?','A hurry case',['A minor case','Not a first aid case','Something to treat tomorrow'],'Second Class 6b (Scouts BSA requirements).'),
    Q('severe','B','A small child is bitten by a black widow. What do you do?','Take the child to the emergency room right away',['Wait to see if it hurts','Put on a bandage and keep hiking','Give them aspirin'],'The bite can be fatal to small children (First Aid merit badge pamphlet).'),
-   Q('severe','B','How can you learn about a patient\'s allergies if they cannot talk?','Look for a medical ID bracelet, necklace or card',['Guess','Ask the snake','Check their shoe size'],'First Aid merit badge pamphlet.')
+   Q('severe','B','How can you learn about a patient\'s allergies if they cannot talk?','Look for a medical ID bracelet, necklace or card',['Guess','Ask the snake','Check their shoe size'],'First Aid merit badge pamphlet.'),
+   Q('gear','TWB','Tenderfoot 4c asks you to tell what?','What you can do on a campout to prevent or reduce injuries',['How to cook a meal','How to pitch a tent','How to tie a bowline'],'Scouts BSA requirements.'),
+   Q('plant','WB','What helps relieve poison ivy itching?','Wet compresses, calamine lotion or hydrocortisone cream',['Scratching hard','Hot sauce','Rubbing it with sand'],'Oatmeal baths may help too (CDC).'),
+   Q('plant','WB','Should you put creams on broken, oozing poison ivy blisters?','No',['Yes, a thick layer','Only bug spray','Only sunscreen'],'CDC.'),
+   Q('severe','WB','After touching poison ivy, a scout\'s face swells and they have trouble breathing. What do you do?','Call 911',['Put on calamine and wait','Send them to bed','Give them a snack'],'CDC.'),
+   Q('severe','WB','A scout who had a severe poison ivy reaction before touches it again. What does the CDC advise?','Get emergency care: call 911 or go to an emergency room',['Ignore it','Wait a week','Burn the plant'],'CDC.'),
+   Q('severe','B','Someone ate part of a plant that might be poison hemlock. What do you do?','Get medical help right away: call 911 or Poison Control',['Wait for symptoms','Make them eat more to be sure','Keep hiking'],'Both hemlocks can kill if eaten (Oregon State Extension).')
   ],
   tips:['Learn the poisonous plants, snakes and critters where you camp, and brief your patrol before the trek. NC, SC and GA have six venomous snakes; Virginia has three.',
    'Leaves of three, let it be, but remember poison sumac has 7 to 13 leaflets.',
@@ -2063,37 +2076,118 @@ ST.s3.qb.push(
    'Black bear: do not run. Alligator: stay at least 60 feet away. Severe allergic reaction: epinephrine and 911. Poison Control: 800-222-1222.']
  };
  const scene=(it,lines)=>L=>GROUND+`<g class="pop"><rect x="40" y="40" width="240" height="190" rx="12" fill="#fff" stroke="#14202e" stroke-width="3"/><svg x="50" y="60" width="220" height="154" viewBox="0 0 200 140">${it.d}</svg></g>`+tx(400,96,it.n.length>22?it.n.slice(0,it.n.lastIndexOf(' ',22)):it.n,{s:18})+(it.n.length>22?tx(400,116,it.n.slice(it.n.lastIndexOf(' ',22)+1),{s:18}):'')+`<g class="fade" style="animation-delay:.8s">${tx(400,140,it.c,{s:14,f:'#5a6878'})}${(lines||'').split('|').map((l,i)=>tx(400,170+i*22,l,{s:14})).join('')}</g>`;
- const it=n=>ST.s9.items.find(i=>i.n===n);
- const st=(n,cap,lines)=>({t:n,cap,sc:scene(it(n),lines),dur:6});
- const T=[st('Leaves of three, let it be','Learn poison ivy, oak and sumac in your area.','3 leaflets: ivy, oak|7 to 13: sumac'),
-  st('Washing off plant oil','Wash with soap and water within minutes, then rubbing alcohol and calamine.','10 to 20 minutes|wash clothes apart'),
-  st('Never burn it','The smoke is dangerous to breathe.','no poison ivy firewood'),
-  st('Preventing bites and stings','Long pants tucked in, repellent, middle of the trail.','tuck · spray · stay on trail'),
-  st('Tick check','Check scalp, ears, armpits, waist and behind the knees.','often, and again at home'),
-  st('Removing a tick','Tweezers close to the skin, steady pull, then wash.','no matches|no jelly, no polish'),
-  st('Bee stinger','Scrape it off; do not squeeze. Watch for allergies.','scrape · wash · ice'),
-  st('Meeting a harmless snake','Most snakes are harmless; let them go on their way.','not sure? treat as venomous'),
-  st('Meeting a snake','Stop, back away slowly, give it room.','never touch a snake|even a dead one'),
-  st('Snakebite first aid','Call 911, remove rings, keep calm and still, bite in a comfortable, neutral position.','neutral position (CDC)|treat for shock'),
-  st('Snakebite: never do this','No cutting, sucking, tourniquet or ice.','no alcohol or aspirin')];
- const W=[...T,st('Pit viper clues','Look at the whole snake from far away: color, pattern, size and range.','head shape fools people'),
-  st('Coral snake colors','Red touches yellow: coral snake. Red touches black: harmless mimic.','North America only'),
-  st('Spider bites','Wash, cold pack, and get medical help.','widow · recluse'),
-  st('Northern watersnake (harmless)','Blotches, not bands; mostly Piedmont and mountains.','often mistaken for a cottonmouth'),
-  st('Animal bite first aid','Wash with soap and water, bandage, see a doctor.','Second Class 6a'),
-  st('Bats and rabies','Any bat contact: tell an adult and see a doctor.','bites can be tiny'),
-  st('Respect wildlife','Watch from a distance; never feed wild animals.','Leave No Trace 6')];
- const B=[...W,st('Never eat wild plants','Hemlocks and other deadly plants look like food.','call Poison Control'),
-  st('Severe allergic reaction','Trouble breathing or swelling: epinephrine and 911.','anaphylaxis = hurry case'),
-  st('Fire ant stings','Do not break the blisters; wash and bandage.','watch for allergy'),
-  st('Food storage','Canister, locker or a high bag for food and smellables.','toothpaste too'),
-  st('Bear encounter','Do not run; back away slowly and let the bear leave.','never climb a tree|if attacked, fight back'),
-  st('Alligator safety','Stay 60 feet away; never feed; swim only in daylight.','dusk to dawn = active')];
- ST.s9.steps={T,W,B};
- NINFO.s9={name:'Jungle Trek Hazard Challenge',skill:'Plants, Snakes & Critters',res:[L_FA,L_RA,L_NCS,L_SRL,L_CSN,L_CPL,L_GSS],
-  ic:`<path d="M-14 12C-6 18 2 12-2 4S2-10 10-8" fill="none" stroke="#c9a96e" stroke-width="6" stroke-linecap="round"/><path d="M-14 12C-6 18 2 12-2 4S2-10 10-8" fill="none" stroke="#6e4a2a" stroke-width="6" stroke-dasharray="3 4"/><path d="M8-14C12-16 16-14 16-10C16-6 12-4 8-6Z" fill="#b8955a" stroke="#14202e" stroke-width="1"/><g transform="translate(-8,-8) scale(.32)">${leaf(0,0,0,40,32,'#3e8e3a',true)}${leaf(0,10,-74,34,28,'#47963f',true,true)}${leaf(0,10,74,34,28,'#47963f',true)}</g>`};
+ /* ---- split into two stations: s9 Poisonous Plants, s10 Snakes, Spiders & Critters ---- */
+ const byName=n=>{const x=ALL.items.find(i=>i.n===n);if(!x)throw new Error('missing card '+n);return x};
+ const LVL={ /* card level overrides (default TWB) */
+  'Virginia creeper (look-alike)':'WB','Boxelder seedling (look-alike)':'WB','When to get help for a rash':'WB','Treating the itch':'WB','Poison Control':'WB',
+  'Poison hemlock':'B','Water hemlock':'B','Giant hogweed':'B',
+  'Eastern diamondback rattlesnake':'WB','Pygmy rattlesnake':'WB','Coral snake':'WB','Scarlet kingsnake (harmless)':'WB','Black racer (harmless)':'WB',
+  'Northern watersnake (harmless)':'WB','Eastern hognose (harmless)':'WB','Pit viper clues':'WB','Coral snake colors':'WB',
+  'Brown recluse spider':'WB','Yellow garden spider (harmless)':'WB','Fire ants':'WB','Spider bites':'WB','Repellent and permethrin':'WB',
+  'Raccoon':'WB','Bat':'WB','Skunk':'WB','Black bear':'WB','Animal bite first aid':'WB','Bats and rabies':'WB','Respect wildlife':'WB','Food storage':'WB',
+  'Scorpion':'B','Fire ant stings':'B','Alligator':'B','Bear encounter':'B','Alligator safety':'B','Rodents and hantavirus':'B','Severe allergic reaction':'B'};
+ const pick=names=>names.map(n=>{const x=Object.assign({},byName(n));x.lv=LVL[n]||'TWB';return x});
+ const QLV={ /* question level overrides by index in ALL.qb */ 23:'WB',32:'WB',35:'WB',37:'WB',72:'WB',132:'WB',133:'WB'};
+ const qs=(idx,cat)=>idx.map(i=>{const q=Object.assign({},ALL.qb[i]);if(QLV[i])q.lv=QLV[i];if(cat&&cat[i])q.c=cat[i];return q});
+ const range=(a,b)=>[...Array(b-a+1)].map((_,i)=>a+i);
+ const P_CARDS=['Poison ivy','Poison ivy vine','Atlantic poison oak','Poison sumac','Virginia creeper (look-alike)','Boxelder seedling (look-alike)','Poison hemlock','Water hemlock','Giant hogweed',
+  'Leaves of three, let it be','Preventing exposure','Washing off plant oil','Treating the itch','When to get help for a rash','Never burn it','Never eat wild plants','Poison Control','Go further: plant merit badges'];
+ const A_CARDS=['Copperhead','Cottonmouth (water moccasin)','Timber (canebrake) rattlesnake','Eastern diamondback rattlesnake','Pygmy rattlesnake','Coral snake','Scarlet kingsnake (harmless)',
+  'Rat snake (harmless)','Black racer (harmless)','Garter snake (harmless)','Northern watersnake (harmless)','Eastern hognose (harmless)','Pit viper clues','Coral snake colors',
+  'Meeting a harmless snake','Meeting a snake','Snakebite first aid','Snakebite: never do this','Harmless snakebite first aid',
+  'Tick','Honeybee','Mosquito','Black widow spider','Brown recluse spider','Wolf spider (harmless)','Yellow garden spider (harmless)','Fire ants','Scorpion',
+  'Preventing bites and stings','Repellent and permethrin','Tick check','Removing a tick','Bee stinger','Spider bites','Harmless spider bite first aid','Fire ant stings',
+  'Raccoon','Bat','Skunk','Black bear','Alligator','Animal bite first aid','Bats and rabies','Respect wildlife','Food storage','Bear encounter','Alligator safety','Rodents and hantavirus',
+  'Severe allergic reaction','Personal first aid kit','Go further: merit badges'];
+ const P_Q=[1,3,137,7,8,9,10,11,32,33,39,40,41,42,43,44,...range(45,56),138,139,132,133,134,140,141,142];
+ const A_Q=[0,2,4,5,6,...range(12,31),...range(34,38),...range(57,131),135,136];
+ const base={clockNote:ALL.clockNote,idCat:'id'};
+ ST.s9=Object.assign({},base,{id:'s9',n:9,name:'Poison Jungle Challenge',
+  scenario:'The trail to the reward winds through a jungle of poison ivy, poison oak and strange plants your tribe has never seen. Spot each poisonous plant, keep your tribe out of it, and treat anyone who touches one. 15 to 25 minutes, 50 points.',
+  time:{T:15,W:20,B:25},
+  notes:'Focused on the plants of North Carolina, South Carolina, Georgia and Virginia. This trainer teaches the basics and does not replace a first aid course. For a swallowed plant call Poison Control at 800-222-1222; for swelling or trouble breathing call 911. Never taste a plant to test it.',
+  testNote:{all:'Rank requirement questions come first as a warm-up and do not count. Answers focus on NC, SC, GA and VA and follow the First Aid merit badge pamphlet and the CDC.'},
+  idPlan:{T:[['p',4]],W:[['p',4]],B:[['p',4]]},
+  goal:{T:{t:'Spot it and wash it off',d:'Identify poison ivy (leaves and vine), Atlantic poison oak and poison sumac, and tell how to treat exposure (Tenderfoot 4b). Tell how to prevent contact on a campout (Tenderfoot 4c), and why you never burn these plants or eat wild plants.'},
+   W:{t:'Look-alikes and getting help',d:'Do everything Beginner patrols do. Also tell poison ivy from harmless look-alikes like Virginia creeper and boxelder, treat the itch, know when a rash needs a doctor or 911, and call Poison Control for a swallowed plant.'},
+   B:{t:'Deadly plants',d:'Do everything Intermediate patrols do. Also recognize poison hemlock, water hemlock and giant hogweed, know where giant hogweed has been found in our area, and handle a swallowed-plant emergency as a hurry case.'}},
+  judge:{T:['Name that plant (20): poison ivy leaves and vine, Atlantic poison oak and poison sumac.','Plant first aid (30): wash right away with soap and water, clothes washed separately, protective clothing, never burn it, never eat wild plants.'],
+   W:['Name that plant (15): as Beginner, plus Virginia creeper and boxelder look-alikes.','Plant first aid (25): as Beginner, plus treating the itch and cleaning tools.','Getting help (10): when a rash needs a doctor, when to call 911, Poison Control.'],
+   B:['Name that plant (12): everything from Intermediate, plus poison hemlock, water hemlock and giant hogweed.','Plant first aid (22): as Intermediate, plus giant hogweed sap.','Getting help (16): swallowed plants as a hurry case, Poison Control and 911.']},
+  items:pick(P_CARDS),
+  cats:[{k:'gear',n:'Know before you go (warm-up, not scored)',pts:{T:0,W:0,B:0}},{k:'id',n:'Name that plant',pts:{T:20,W:15,B:12}},{k:'plant',n:'Poisonous plant first aid',pts:{T:30,W:25,B:22}},{k:'severe',n:'Getting help',pts:{T:0,W:10,B:16}}],
+  qb:qs(P_Q),
+  tips:['Learn the poisonous plants where you camp and show your patrol before the hike.',
+   'Leaves of three, let it be, but poison sumac has 7 to 13 leaflets and Virginia creeper (harmless) has five.',
+   'A hairy, ropelike vine on a tree is poison ivy. Do not grab it or burn it.',
+   'Long sleeves, long pants, boots and gloves keep the oil off your skin.',
+   'Touched it? Wash with soap and water right away; the oil takes only 10 to 20 minutes.',
+   'Wash exposed clothes separately and clean tools; the oil can last for years.',
+   'Never eat wild plants, berries or mushrooms. Swallowed plant: Poison Control, 800-222-1222.']});
+ ST.s10=Object.assign({},base,{id:'s10',n:10,name:'Jungle Critter Challenge',
+  scenario:'Your tribe must trek through the jungle to reach the reward. A rattlesnake rests under a log, ticks wait in the tall grass, a black widow hides in the latrine, and something big has been sniffing around camp. Spot each critter, keep your tribe safe, and give first aid when a tribe-mate gets bitten or stung. 20 to 30 minutes, 50 points.',
+  time:ALL.time,
+  notes:'Focused on the snakes, spiders and animals of North Carolina, South Carolina, Georgia and Virginia. This trainer teaches the basics and does not replace a first aid course. In a real emergency call 911. Never touch a snake, spider or wild animal to "practice."',
+  testNote:{all:'Rank requirement questions come first as a warm-up and do not count. Answers focus on NC, SC, GA and VA. They follow the First Aid and Reptile and Amphibian Study merit badge pamphlets, except snakebite positioning, which follows the CDC.'},
+  idPlan:{T:[['s',2],['b',2]],W:[['s',2],['b',1],['a',1]],B:[['s',2],['b',1],['a',1]]},
+  goal:{T:{t:'Bites, stings and snakes',d:'Show first aid for insect stings, tick bites and venomous snakebite (Tenderfoot 4a), and tell how to prevent them (Tenderfoot 4c). Identify copperheads, cottonmouths and timber rattlesnakes, the harmless rat and garter snakes, ticks, bees and black widows, and tell what to do when you meet a snake.'},
+   W:{t:'Snakes, spiders and animal bites',d:'Do everything Beginner patrols do. Also name all the venomous snakes of NC, SC, GA and VA (six species; three in Virginia) and tell them from harmless look-alikes, give first aid for black widow and brown recluse bites, and show first aid for the bite of a warm-blooded animal (Second Class 6a). Explain rabies risk, including bats, respecting wildlife and food storage.'},
+   B:{t:'Lead the trek',d:'Do everything Intermediate patrols do. Also handle a severe allergic reaction, scorpion stings and fire ants, and lead your patrol through a black bear or alligator encounter. Brief your patrol before the trek on what lives in the area.'}},
+  judge:{T:['Name that critter (15): copperhead, cottonmouth, timber rattlesnake, rat and garter snakes, ticks, bees, black widows and wolf spiders.','Stings, ticks and spiders (18): tick removed close to the skin with tweezers, stinger scraped off, tick check and prevention.','Snakes (17): leave snakes alone; for a bite call 911, keep calm and still, remove rings, no cutting, sucking, tourniquet or ice.'],
+   W:['Name that critter (12): as Beginner, plus all six venomous snakes, harmless look-alikes and mammals that carry rabies.','Stings, ticks and spiders (12): as Beginner, plus black widow and brown recluse first aid and permethrin.','Snakes (14): as Beginner, plus pit viper clues, marking the swelling with the time, and why head shape fools people.','Wild animals and bites (12): animal bite first aid, rabies and bats, never feed wildlife, food storage.'],
+   B:['Name that critter (10): everything from Intermediate, plus alligators.','Stings, ticks and spiders (10): as Intermediate, plus fire ants and scorpions.','Snakes (12): as Intermediate, plus dry bites and the coral snake wrap.','Wild animals and bites (10): black bear and alligator encounters, hantavirus.','Severe reactions (8): anaphylaxis, epinephrine auto-injector and medical ID.']},
+  items:pick(A_CARDS),
+  cats:[{k:'gear',n:'Know before you go (warm-up, not scored)',pts:{T:0,W:0,B:0}},{k:'id',n:'Name that critter',pts:{T:15,W:12,B:10}},{k:'bug',n:'Stings, ticks and spiders',pts:{T:18,W:12,B:10}},{k:'snake',n:'Snake encounters and snakebite',pts:{T:17,W:14,B:12}},{k:'animal',n:'Wild animals and bites',pts:{T:0,W:12,B:10}},{k:'severe',n:'Severe reactions',pts:{T:0,W:0,B:8}}],
+  qb:qs(A_Q),
+  tips:['Learn the snakes, spiders and animals where you camp, and brief your patrol before the trek. NC, SC and GA have six venomous snakes; Virginia has three.',
+   'Most snakes you meet are harmless. Leave every snake alone; if you are not sure, treat it as venomous.',
+   'Long pants tucked into socks, repellent on skin, permethrin on clothes, and tick checks every day.',
+   'Remove a tick close to the skin with tweezers, pulling straight out. No matches, jelly or nail polish.',
+   'Scrape a bee stinger off; do not squeeze it. Shake out boots and sleeping bags.',
+   'Snakebite: call 911, remove rings, keep calm and still with the bite in a comfortable, neutral position. No cutting, sucking, tourniquet or ice.',
+   'Never feed wildlife. Store food, trash and toothpaste where animals cannot get them.',
+   'Black bear: do not run. Alligator: stay at least 60 feet away. Severe allergic reaction: epinephrine and 911.']});
+ const st=(S,n,cap,lines)=>{const it=S.items.find(i=>i.n===n);if(!it)throw new Error('step card '+n);return {t:n,cap,sc:scene(it,lines),dur:6}};
+ {const S=ST.s9,s=(n,c,l)=>st(S,n,c,l);
+  const T=[s('Leaves of three, let it be','Learn poison ivy, Atlantic poison oak and sumac.','3 leaflets: ivy, oak|7 to 13: sumac'),
+   s('Preventing exposure','Long sleeves, pants, boots and gloves; know where it grows.','Tenderfoot 4c'),
+   s('Washing off plant oil','Wash with soap and water within minutes, then rubbing alcohol and calamine.','10 to 20 minutes|wash clothes apart'),
+   s('Never burn it','The smoke is dangerous to breathe.','no poison ivy firewood'),
+   s('Never eat wild plants','Never taste wild plants, berries or mushrooms.','swallowed? Poison Control')];
+  const W=[...T,s('Virginia creeper (look-alike)','Five leaflets and dark berries: not poison ivy.','count the leaflets'),
+   s('Treating the itch','Wet compresses, calamine or hydrocortisone; no creams on broken skin.','do not scratch'),
+   s('When to get help for a rash','Face, genitals, severe, swallowed or smoke: see a doctor.','swelling or trouble breathing: 911'),
+   s('Poison Control','800-222-1222 for a swallowed plant.','give nothing by mouth')];
+  const B=[...W,s('Poison hemlock','Purple-spotted stem, lacy leaves: deadly if eaten.','no stem whistles'),
+   s('Giant hogweed','Sap plus sunlight burns; wash and stay out of sun 48 hours.','Watauga County, NC')];
+  S.steps={T,W,B};}
+ {const S=ST.s10,s=(n,c,l)=>st(S,n,c,l);
+  const T=[s('Preventing bites and stings','Long pants tucked in, repellent, middle of the trail.','tuck · spray · stay on trail'),
+   s('Tick check','Check scalp, ears, armpits, waist and behind the knees.','often, and again at home'),
+   s('Removing a tick','Tweezers close to the skin, steady pull, then wash.','no matches|no jelly, no polish'),
+   s('Bee stinger','Scrape it off; do not squeeze. Watch for allergies.','scrape · wash · ice'),
+   s('Meeting a harmless snake','Most snakes are harmless; let them go on their way.','not sure? treat as venomous'),
+   s('Meeting a snake','Stop, back away slowly, give it room.','never touch a snake|even a dead one'),
+   s('Snakebite first aid','Call 911, remove rings, keep calm and still, bite in a comfortable, neutral position.','neutral position (CDC)|treat for shock'),
+   s('Snakebite: never do this','No cutting, sucking, tourniquet or ice.','no alcohol or aspirin')];
+  const W=[...T,s('Pit viper clues','Look at the whole snake from far away: color, pattern, size and range.','head shape fools people'),
+   s('Coral snake colors','Red touches yellow: coral snake. Red touches black: harmless mimic.','North America only'),
+   s('Northern watersnake (harmless)','Blotches, not bands; mostly Piedmont and mountains.','often mistaken for a cottonmouth'),
+   s('Spider bites','Wash, cold pack, and get medical help.','widow · recluse'),
+   s('Animal bite first aid','Wash with soap and water, bandage, see a doctor.','Second Class 6a'),
+   s('Bats and rabies','Any bat contact: tell an adult and see a doctor.','bites can be tiny'),
+   s('Respect wildlife','Watch from a distance; never feed wild animals.','Leave No Trace 6'),
+   s('Food storage','Container, locked car, or a bag 10 feet up and 10 feet out.','toothpaste too')];
+  const B=[...W,s('Fire ant stings','Do not break the blisters; wash and bandage.','watch for allergy'),
+   s('Severe allergic reaction','Trouble breathing or swelling: epinephrine and 911.','anaphylaxis = hurry case'),
+   s('Bear encounter','Do not run; back away slowly and let the bear leave.','never climb a tree|if attacked, fight back'),
+   s('Alligator safety','Stay 60 feet away; never feed; swim only in daylight.','dusk to dawn = active')];
+  S.steps={T,W,B};}
+ const leafIc=`<g transform="translate(0,6) scale(.42)">${leaf(0,-16,0,46,38,'#3e8e3a',true)}${leaf(0,0,-74,40,32,'#47963f',true,true)}${leaf(0,0,74,40,32,'#47963f',true)}</g>`;
+ NINFO.s9={name:'Poison Jungle Challenge',skill:'Poisonous Plants',res:[L_FA,L_CPL,L_APO,L_LOOK],ic:leafIc};
+ NINFO.s10={name:'Jungle Critter Challenge',skill:'Snakes & Critters',res:[L_FA,L_RA,L_NCS,L_SRL,L_CSN,L_GSS],
+  ic:`<path d="M-14 12C-6 18 2 12-2 4S2-10 10-8" fill="none" stroke="#c9a96e" stroke-width="6" stroke-linecap="round"/><path d="M-14 12C-6 18 2 12-2 4S2-10 10-8" fill="none" stroke="#6e4a2a" stroke-width="6" stroke-dasharray="3 4"/><path d="M8-14C12-16 16-14 16-10C16-6 12-4 8-6Z" fill="#b8955a" stroke="#14202e" stroke-width="1"/>`};
 }
-
 /* ---- Firem'n Chit: official requirements (scouting.org) and Troop 321 Firem'n Chit ---- */
 ST.s1.items.push(nit('Firem\'n Chit','Firem\'n Chit','Scouting America\'s card that says you know how to build, tend and put out fires safely. You promise to: read and understand the fire safety rules; build a campfire only when necessary and with the needed permits; use existing fire lays and Leave No Trace; clear flammable material at least 5 feet in all directions; safely use and store fire-starting materials; keep the fire attended at all times; keep water and a shovel ready and report any wildfire; use the cold-out test and clean the fire lay before you leave; and follow the Outdoor Code. Your Firem\'n rights can be taken away if you fail in your responsibility. Troop 321 uses a 3-strikes rule: after 2 warnings you re-learn the card, and a serious fire infraction earns a warning right away. (Troop 321 Firem\'n Chit)',`<rect width="200" height="140" fill="#fbfaf2"/><rect x="40" y="30" width="120" height="80" rx="8" fill="#e8402a" stroke="#8a1f12" stroke-width="3"/><rect x="50" y="40" width="100" height="60" rx="5" fill="#f3e3c8"/>${tx(100,94,'FIREM\'N CHIT',{s:12,f:'#8a1f12'})}<g transform="translate(86,62) scale(.55)">${I1.flame()}</g><path d="M118 46V74" stroke="#6e4524" stroke-width="3"/><path d="M110 74H126L122 84H114Z" fill="#8d99a6" stroke="#4a5562" stroke-width="1.5"/>`,{id:'x',lk:[{t:'Scouting America: Firem\'n Chit',u:'https://www.scouting.org/awards/awards-central/firemn-chit/'},{t:'Firem\'n Chit card (PDF)',u:'https://filestore.scouting.org/filestore/boyscouts/pdf/512-016_wb.pdf'}],q:'firemn chit card scouts',use:'Showing you are trusted to light and tend campfires, cooking fires, stoves and lanterns on troop outings.'}));
 ST.s1.qb.push(
